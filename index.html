@@ -693,6 +693,7 @@
 const VERSION = '1.0';
 const CACHE_KEY = 'soccer-note-cache';
 const GAS_URL_KEY = 'soccer-note-gas-url';
+const DEFAULT_GAS_URL = 'https://script.google.com/macros/s/AKfycbwnM3ATKl_bZZEokfMJx1C_pUbMo5Pydr8JHDLki7JoFGsNzi_zd0_wtq5BEWMRdQWKvg/exec';
 const TYPE_LABELS = { game: '試合', practice: '練習', school: 'スクール' };
 const TYPE_CLASSES = { game: 'type-game', practice: 'type-practice', school: 'type-school' };
 const TAG_LABELS = { good: '良い', improve: '改善', drill: '練習' };
@@ -717,7 +718,7 @@ function init() {
 
 // ===== GAS URL =====
 function getGasUrl() {
-  return localStorage.getItem(GAS_URL_KEY) || '';
+  return localStorage.getItem(GAS_URL_KEY) || DEFAULT_GAS_URL;
 }
 function openGasUrlModal() {
   document.getElementById('gasUrlInput').value = getGasUrl();
