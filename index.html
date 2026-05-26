@@ -138,15 +138,13 @@
     padding: 6px 10px; border-radius: 8px;
   }
   .item-row.tag-good { background: var(--green-bg); }
-  .item-row.tag-improve { background: var(--orange-bg); }
-  .item-row.tag-drill { background: var(--purple-bg); }
+  .item-row.tag-improve, .item-row.tag-drill { background: var(--orange-bg); }
   .item-tag {
     flex-shrink: 0; font-size: 11px; font-weight: 700;
     padding: 1px 6px; border-radius: 4px; margin-top: 1px;
   }
   .tag-good .item-tag { background: var(--green); color: #fff; }
-  .tag-improve .item-tag { background: var(--orange); color: #fff; }
-  .tag-drill .item-tag { background: var(--purple); color: #fff; }
+  .tag-improve .item-tag, .tag-drill .item-tag { background: var(--orange); color: #fff; }
   .item-text { flex: 1; }
   .item-themes {
     display: flex; flex-wrap: wrap; gap: 3px; margin-top: 3px;
@@ -480,7 +478,6 @@
   }
   .theme-bar-good { background: var(--green); height: 100%; }
   .theme-bar-improve { background: var(--orange); height: 100%; }
-  .theme-bar-drill { background: var(--purple); height: 100%; }
   .theme-bar-count { font-size: 11px; color: var(--text-sub); width: 30px; text-align: right; }
 </style>
 </head>
@@ -492,7 +489,7 @@
     <div class="logo">
       <span class="logo-icon">⚽</span>
       <span class="logo-text">観察ノート</span>
-      <span class="logo-ver">v1.0</span>
+      <span class="logo-ver">v1.1</span>
     </div>
     <button class="btn-reload" onclick="loadData()">↻ 更新</button>
   </div>
@@ -601,7 +598,7 @@
       <div class="setting-item" style="border-bottom:none;">
         <div>
           <div class="setting-label">バージョン</div>
-          <div class="setting-desc">v1.0 / サッカー観察ノート</div>
+          <div class="setting-desc">v1.1 / サッカー観察ノート</div>
         </div>
       </div>
     </div>
@@ -690,13 +687,13 @@
 
 <script>
 // ===== CONFIG =====
-const VERSION = '1.0';
+const VERSION = '1.1';
 const CACHE_KEY = 'soccer-note-cache';
 const GAS_URL_KEY = 'soccer-note-gas-url';
 const DEFAULT_GAS_URL = 'https://script.google.com/macros/s/AKfycbwnM3ATKl_bZZEokfMJx1C_pUbMo5Pydr8JHDLki7JoFGsNzi_zd0_wtq5BEWMRdQWKvg/exec';
 const TYPE_LABELS = { game: '試合', practice: '練習', school: 'スクール' };
 const TYPE_CLASSES = { game: 'type-game', practice: 'type-practice', school: 'type-school' };
-const TAG_LABELS = { good: '良い', improve: '改善', drill: '練習' };
+const TAG_LABELS = { good: '良い', improve: '改善' };
 
 // ===== STATE =====
 let state = { entries: [], items: [], themes: [] };
@@ -987,8 +984,7 @@ function addItemRow(data) {
     <div class="item-form-meta">
       <select class="tag-select" data-field="tag">
         <option value="good" ${data && data.tag === 'good' ? 'selected' : ''}>良い</option>
-        <option value="improve" ${data && data.tag === 'improve' ? 'selected' : ''}>改善</option>
-        <option value="drill" ${data && data.tag === 'drill' ? 'selected' : ''}>練習</option>
+        <option value="improve" ${data && (data.tag === 'improve' || data.tag === 'drill') ? 'selected' : ''}>改善</option>
       </select>
       ${themeBtns}
     </div>
@@ -1103,8 +1099,7 @@ function renderThemeReview() {
   sortedThemes.forEach(t => {
     const items = themeMap[t];
     const good = items.filter(i => i.tag === 'good').length;
-    const improve = items.filter(i => i.tag === 'improve').length;
-    const drill = items.filter(i => i.tag === 'drill').length;
+    const improve = items.filter(i => i.tag === 'improve' || i.tag === 'drill').length;
     const total = items.length;
     const pct = (v) => (v / maxCount * 100).toFixed(1);
     html += `<div class="theme-bar-row">
@@ -1112,7 +1107,6 @@ function renderThemeReview() {
       <div class="theme-bar-track">
         <div class="theme-bar-good" style="width:${pct(good)}%"></div>
         <div class="theme-bar-improve" style="width:${pct(improve)}%"></div>
-        <div class="theme-bar-drill" style="width:${pct(drill)}%"></div>
       </div>
       <span class="theme-bar-count">${total}</span>
     </div>`;
@@ -1122,7 +1116,6 @@ function renderThemeReview() {
   html += '<div style="display:flex;gap:12px;margin:12px 0 16px;font-size:11px;color:var(--text-sub);">';
   html += '<span><span style="display:inline-block;width:10px;height:10px;background:var(--green);border-radius:2px;vertical-align:middle;"></span> 良い</span>';
   html += '<span><span style="display:inline-block;width:10px;height:10px;background:var(--orange);border-radius:2px;vertical-align:middle;"></span> 改善</span>';
-  html += '<span><span style="display:inline-block;width:10px;height:10px;background:var(--purple);border-radius:2px;vertical-align:middle;"></span> 練習</span>';
   html += '</div>';
 
   // Detailed sections
@@ -1159,7 +1152,7 @@ function renderRepeatDetection() {
   }
 
   // Find repeating patterns: items with similar text that appear multiple times
-  const improveItems = state.items.filter(it => it.tag === 'improve');
+  const improveItems = state.items.filter(it => it.tag === 'improve' || it.tag === 'drill');
   const textCounts = {};
   improveItems.forEach(it => {
     const key = normalizeText(it.text);
@@ -1303,7 +1296,7 @@ function buildKidsPages() {
   const totalEntries = state.entries.length;
   const totalItems = state.items.length;
   const goodCount = state.items.filter(i => i.tag === 'good').length;
-  const improveCount = state.items.filter(i => i.tag === 'improve').length;
+  const improveCount = state.items.filter(i => i.tag === 'improve' || i.tag === 'drill').length;
 
   kidsPages.push({
     icon: '🏆', title: '記録スタッツ',
