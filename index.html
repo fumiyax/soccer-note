@@ -1,0 +1,1478 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>サッカー観察ノート</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚽</text></svg>">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap');
+
+  :root {
+    --primary:       #1e293b;
+    --primary-mid:   #334155;
+    --primary-light: #3b82f6;
+    --primary-pale:  #eff6ff;
+    --primary-border:#bfdbfe;
+    --white:         #ffffff;
+    --bg:            #f8fafc;
+    --text:          #0f172a;
+    --text-sub:      #64748b;
+    --border:        #e2e8f0;
+    --card:          #ffffff;
+    --green:         #16a34a;
+    --green-bg:      #f0fdf4;
+    --green-border:  #86efac;
+    --red:           #dc2626;
+    --red-bg:        #fef2f2;
+    --red-border:    #fca5a5;
+    --orange:        #ea580c;
+    --orange-bg:     #fff7ed;
+    --orange-border: #fed7aa;
+    --gold:          #d97706;
+    --gold-bg:       #fffbeb;
+    --purple:        #7c3aed;
+    --purple-bg:     #f5f3ff;
+    --shadow-sm:     0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+    --shadow:        0 4px 6px rgba(0,0,0,0.07), 0 2px 4px rgba(0,0,0,0.04);
+    --radius:        12px;
+    --nav-height:    56px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans JP', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding-bottom: calc(var(--nav-height) + 16px);
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* ===== HEADER ===== */
+  header {
+    background: var(--primary);
+    position: sticky; top: 0; z-index: 100;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+  }
+  .header-inner {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 10px 16px; max-width: 800px; margin: 0 auto;
+  }
+  .logo { display: flex; align-items: center; gap: 10px; }
+  .logo-icon { font-size: 24px; }
+  .logo-text { font-size: 15px; font-weight: 800; color: #fff; letter-spacing: 0.5px; }
+  .logo-ver {
+    background: rgba(59,130,246,0.5); color: #fff;
+    font-size: 10px; font-weight: 700;
+    padding: 1px 7px; border-radius: 4px; margin-left: 6px;
+  }
+  .btn-reload {
+    background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+    color: rgba(255,255,255,0.8); padding: 6px 10px; border-radius: 8px;
+    font-size: 13px; cursor: pointer; font-family: 'Noto Sans JP', sans-serif;
+    transition: all 0.2s;
+  }
+  .btn-reload:hover { background: rgba(255,255,255,0.2); color: #fff; }
+
+  /* ===== BOTTOM NAV ===== */
+  .bottom-nav {
+    position: fixed; bottom: 0; left: 0; right: 0;
+    height: var(--nav-height); z-index: 100;
+    background: var(--white);
+    border-top: 1px solid var(--border);
+    display: flex;
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.06);
+  }
+  .nav-item {
+    flex: 1; display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 2px; cursor: pointer;
+    color: var(--text-sub); font-size: 10px; font-weight: 500;
+    transition: color 0.2s;
+    -webkit-tap-highlight-color: transparent;
+    border: none; background: none; font-family: 'Noto Sans JP', sans-serif;
+  }
+  .nav-item.active { color: var(--primary-light); }
+  .nav-icon { font-size: 20px; line-height: 1; }
+
+  /* ===== MAIN ===== */
+  main { padding: 16px; max-width: 800px; margin: 0 auto; }
+  .section { display: none; }
+  .section.active { display: block; }
+
+  /* ===== CARDS ===== */
+  .card {
+    background: var(--card); border-radius: var(--radius);
+    box-shadow: var(--shadow-sm); padding: 16px;
+    margin-bottom: 12px; border: 1px solid var(--border);
+  }
+  .card-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 8px;
+  }
+  .card-date {
+    font-size: 12px; color: var(--text-sub); font-weight: 500;
+  }
+  .card-type {
+    font-size: 11px; font-weight: 700; padding: 2px 8px;
+    border-radius: 6px; letter-spacing: 0.3px;
+  }
+  .type-game { background: var(--primary-pale); color: var(--primary-light); }
+  .type-practice { background: var(--green-bg); color: var(--green); }
+  .type-school { background: var(--orange-bg); color: var(--orange); }
+  .card-title {
+    font-size: 15px; font-weight: 700; margin-bottom: 8px;
+  }
+  .card-note {
+    font-size: 13px; color: var(--text-sub); margin-bottom: 10px;
+    white-space: pre-wrap; line-height: 1.6;
+  }
+
+  /* ===== ITEM TAGS ===== */
+  .item-list { display: flex; flex-direction: column; gap: 6px; }
+  .item-row {
+    display: flex; align-items: flex-start; gap: 8px;
+    font-size: 13px; line-height: 1.5;
+    padding: 6px 10px; border-radius: 8px;
+  }
+  .item-row.tag-good { background: var(--green-bg); }
+  .item-row.tag-improve { background: var(--orange-bg); }
+  .item-row.tag-drill { background: var(--purple-bg); }
+  .item-tag {
+    flex-shrink: 0; font-size: 11px; font-weight: 700;
+    padding: 1px 6px; border-radius: 4px; margin-top: 1px;
+  }
+  .tag-good .item-tag { background: var(--green); color: #fff; }
+  .tag-improve .item-tag { background: var(--orange); color: #fff; }
+  .tag-drill .item-tag { background: var(--purple); color: #fff; }
+  .item-text { flex: 1; }
+  .item-themes {
+    display: flex; flex-wrap: wrap; gap: 3px; margin-top: 3px;
+  }
+  .theme-chip {
+    font-size: 10px; padding: 1px 5px; border-radius: 4px;
+    background: rgba(0,0,0,0.05); color: var(--text-sub);
+  }
+
+  /* ===== TYPE FILTER ===== */
+  .filter-row {
+    display: flex; gap: 6px; margin-bottom: 16px;
+    overflow-x: auto; scrollbar-width: none;
+  }
+  .filter-row::-webkit-scrollbar { display: none; }
+  .filter-btn {
+    flex: 0 0 auto; padding: 6px 14px;
+    border-radius: 20px; border: 1px solid var(--border);
+    background: var(--white); color: var(--text-sub);
+    font-size: 12px; font-weight: 600; cursor: pointer;
+    font-family: 'Noto Sans JP', sans-serif;
+    transition: all 0.2s;
+  }
+  .filter-btn.active {
+    background: var(--primary); color: #fff; border-color: var(--primary);
+  }
+
+  /* ===== FORM ===== */
+  .form-group { margin-bottom: 16px; }
+  .form-label {
+    display: block; font-size: 12px; font-weight: 700;
+    color: var(--text-sub); margin-bottom: 6px; letter-spacing: 0.3px;
+  }
+  .form-input, .form-select, .form-textarea {
+    width: 100%; padding: 10px 12px;
+    border: 1px solid var(--border); border-radius: 8px;
+    font-size: 14px; font-family: 'Noto Sans JP', sans-serif;
+    background: var(--white); color: var(--text);
+    transition: border-color 0.2s;
+  }
+  .form-input:focus, .form-select:focus, .form-textarea:focus {
+    outline: none; border-color: var(--primary-light);
+    box-shadow: 0 0 0 3px rgba(59,130,246,0.1);
+  }
+  .form-textarea { resize: vertical; min-height: 80px; line-height: 1.6; }
+
+  .form-row { display: flex; gap: 12px; }
+  .form-row .form-group { flex: 1; }
+
+  .type-selector {
+    display: flex; gap: 8px;
+  }
+  .type-option {
+    flex: 1; padding: 10px 8px; text-align: center;
+    border: 2px solid var(--border); border-radius: 10px;
+    cursor: pointer; font-size: 12px; font-weight: 600;
+    transition: all 0.2s; background: var(--white);
+    font-family: 'Noto Sans JP', sans-serif;
+  }
+  .type-option.selected { border-color: var(--primary-light); background: var(--primary-pale); }
+  .type-option-icon { font-size: 20px; display: block; margin-bottom: 4px; }
+
+  /* ===== ITEM FORM ===== */
+  .items-form { margin-top: 8px; }
+  .item-form-row {
+    display: flex; gap: 8px; align-items: flex-start;
+    margin-bottom: 8px; padding: 10px;
+    background: var(--bg); border-radius: 10px;
+    border: 1px solid var(--border);
+  }
+  .item-form-main { flex: 1; display: flex; flex-direction: column; gap: 6px; }
+  .item-form-text {
+    width: 100%; padding: 8px 10px;
+    border: 1px solid var(--border); border-radius: 6px;
+    font-size: 13px; font-family: 'Noto Sans JP', sans-serif;
+    background: var(--white); resize: none;
+    min-height: 38px; line-height: 1.5;
+  }
+  .item-form-text:focus { outline: none; border-color: var(--primary-light); }
+  .item-form-meta { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+  .tag-select {
+    padding: 4px 8px; border-radius: 6px; border: 1px solid var(--border);
+    font-size: 11px; font-weight: 600; font-family: 'Noto Sans JP', sans-serif;
+    background: var(--white);
+  }
+  .theme-toggle {
+    padding: 3px 7px; border-radius: 6px;
+    border: 1px solid var(--border); background: var(--white);
+    font-size: 11px; cursor: pointer;
+    font-family: 'Noto Sans JP', sans-serif;
+    transition: all 0.15s;
+  }
+  .theme-toggle.selected {
+    background: var(--primary-pale); border-color: var(--primary-light);
+    color: var(--primary-light); font-weight: 600;
+  }
+  .btn-remove-item {
+    width: 28px; height: 28px; border-radius: 50%;
+    border: none; background: var(--red-bg); color: var(--red);
+    font-size: 16px; cursor: pointer; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    margin-top: 6px;
+  }
+
+  .btn-add-item {
+    width: 100%; padding: 10px;
+    border: 2px dashed var(--border); border-radius: 10px;
+    background: transparent; color: var(--text-sub);
+    font-size: 13px; font-weight: 600; cursor: pointer;
+    font-family: 'Noto Sans JP', sans-serif;
+    transition: all 0.2s;
+  }
+  .btn-add-item:hover { border-color: var(--primary-light); color: var(--primary-light); }
+
+  /* ===== BUTTONS ===== */
+  .btn {
+    padding: 12px 24px; border-radius: 10px;
+    font-size: 14px; font-weight: 700; cursor: pointer;
+    border: none; font-family: 'Noto Sans JP', sans-serif;
+    transition: all 0.2s; letter-spacing: 0.3px;
+  }
+  .btn-primary { background: var(--primary-light); color: #fff; width: 100%; }
+  .btn-primary:hover { background: #2563eb; }
+  .btn-primary:disabled { background: #94a3b8; cursor: not-allowed; }
+  .btn-danger { background: var(--red); color: #fff; }
+  .btn-ghost {
+    background: transparent; color: var(--text-sub);
+    border: 1px solid var(--border); padding: 8px 16px;
+  }
+  .btn-sm { padding: 6px 12px; font-size: 12px; }
+  .btn-row { display: flex; gap: 8px; margin-top: 16px; }
+  .btn-row .btn { flex: 1; }
+
+  /* ===== EMPTY STATE ===== */
+  .empty-state {
+    text-align: center; padding: 48px 16px;
+    color: var(--text-sub);
+  }
+  .empty-icon { font-size: 48px; margin-bottom: 12px; }
+  .empty-state p { font-size: 14px; line-height: 1.6; }
+
+  /* ===== TOAST ===== */
+  #toast {
+    position: fixed; bottom: calc(var(--nav-height) + 16px);
+    left: 50%; transform: translateX(-50%) translateY(20px);
+    background: var(--primary); color: #fff;
+    padding: 10px 20px; border-radius: 10px;
+    font-size: 13px; font-weight: 600;
+    box-shadow: var(--shadow); z-index: 200;
+    opacity: 0; transition: all 0.3s; pointer-events: none;
+  }
+  #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  /* ===== OVERLAY / MODAL ===== */
+  .overlay {
+    position: fixed; inset: 0; z-index: 150;
+    background: rgba(0,0,0,0.5);
+    display: none; align-items: flex-end; justify-content: center;
+  }
+  .overlay.show { display: flex; }
+  .modal {
+    background: var(--white); border-radius: 16px 16px 0 0;
+    width: 100%; max-width: 800px; max-height: 85vh;
+    overflow-y: auto; padding: 24px 16px;
+    animation: slideUp 0.25s ease-out;
+  }
+  @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+  .modal-title {
+    font-size: 16px; font-weight: 800; margin-bottom: 16px;
+    text-align: center;
+  }
+  .modal-close {
+    position: absolute; top: 16px; right: 16px;
+    width: 32px; height: 32px; border-radius: 50%;
+    border: none; background: var(--bg); cursor: pointer;
+    font-size: 18px; color: var(--text-sub);
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  /* ===== REVIEW TAB ===== */
+  .sub-tabs {
+    display: flex; gap: 0; margin-bottom: 16px;
+    background: var(--bg); border-radius: 10px; padding: 3px;
+  }
+  .sub-tab {
+    flex: 1; padding: 8px 4px; text-align: center;
+    font-size: 11px; font-weight: 600; cursor: pointer;
+    border-radius: 8px; color: var(--text-sub);
+    border: none; background: none;
+    font-family: 'Noto Sans JP', sans-serif;
+    transition: all 0.2s;
+  }
+  .sub-tab.active { background: var(--white); color: var(--text); box-shadow: var(--shadow-sm); }
+
+  .theme-section { margin-bottom: 20px; }
+  .theme-header {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 14px; font-weight: 700; margin-bottom: 10px;
+    padding-bottom: 6px; border-bottom: 2px solid var(--border);
+  }
+  .theme-icon { font-size: 18px; }
+  .theme-count {
+    margin-left: auto; font-size: 12px; color: var(--text-sub);
+    font-weight: 500;
+  }
+
+  .repeat-card {
+    background: var(--gold-bg); border: 1px solid var(--orange-border);
+    border-radius: var(--radius); padding: 12px; margin-bottom: 10px;
+  }
+  .repeat-count {
+    font-size: 12px; font-weight: 700; color: var(--orange);
+    margin-bottom: 4px;
+  }
+  .repeat-text { font-size: 13px; line-height: 1.5; }
+  .repeat-dates { font-size: 11px; color: var(--text-sub); margin-top: 4px; }
+
+  /* ===== SETTINGS ===== */
+  .setting-item {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 0; border-bottom: 1px solid var(--border);
+  }
+  .setting-label { font-size: 14px; font-weight: 600; }
+  .setting-desc { font-size: 12px; color: var(--text-sub); margin-top: 2px; }
+
+  /* ===== KIDS REVIEW MODE ===== */
+  .kids-overlay {
+    position: fixed; inset: 0; z-index: 200;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: none; flex-direction: column;
+    animation: fadeIn 0.3s;
+  }
+  .kids-overlay.show { display: flex; }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+  .kids-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 12px 16px; color: #fff;
+  }
+  .kids-close {
+    background: rgba(255,255,255,0.2); border: none;
+    color: #fff; padding: 8px 14px; border-radius: 10px;
+    font-size: 13px; font-weight: 700; cursor: pointer;
+    font-family: 'Noto Sans JP', sans-serif;
+  }
+  .kids-title { font-size: 14px; font-weight: 700; }
+  .kids-nav-dots {
+    display: flex; gap: 6px; justify-content: center; padding: 8px;
+  }
+  .kids-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: rgba(255,255,255,0.3); transition: all 0.3s;
+  }
+  .kids-dot.active { background: #fff; width: 20px; border-radius: 4px; }
+
+  .kids-content {
+    flex: 1; overflow: hidden; position: relative;
+  }
+  .kids-card-container {
+    display: flex; transition: transform 0.3s ease;
+    height: 100%;
+  }
+  .kids-card {
+    flex: 0 0 100%; padding: 16px;
+    display: flex; flex-direction: column; align-items: center;
+    justify-content: center; overflow-y: auto;
+  }
+  .kids-card-inner {
+    background: rgba(255,255,255,0.95); border-radius: 20px;
+    padding: 24px 20px; width: 100%; max-width: 400px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+    text-align: center;
+  }
+  .kids-card-icon { font-size: 48px; margin-bottom: 12px; }
+  .kids-card-title {
+    font-size: 18px; font-weight: 800; margin-bottom: 16px;
+    color: var(--primary);
+  }
+  .kids-card-body { text-align: left; }
+  .kids-item {
+    padding: 10px 12px; margin-bottom: 8px;
+    border-radius: 10px; font-size: 14px; line-height: 1.6;
+  }
+  .kids-item-good { background: var(--green-bg); }
+  .kids-item-improve { background: var(--orange-bg); }
+  .kids-stat-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+    margin-top: 12px;
+  }
+  .kids-stat {
+    background: var(--bg); border-radius: 12px; padding: 16px;
+    text-align: center;
+  }
+  .kids-stat-num { font-size: 32px; font-weight: 900; color: var(--primary-light); }
+  .kids-stat-label { font-size: 11px; color: var(--text-sub); font-weight: 600; margin-top: 4px; }
+
+  .kids-nav-arrows {
+    display: flex; justify-content: space-between;
+    padding: 12px 16px; gap: 12px;
+  }
+  .kids-arrow {
+    flex: 1; padding: 14px; border: none; border-radius: 12px;
+    background: rgba(255,255,255,0.2); color: #fff;
+    font-size: 14px; font-weight: 700; cursor: pointer;
+    font-family: 'Noto Sans JP', sans-serif;
+  }
+  .kids-arrow:disabled { opacity: 0.3; cursor: not-allowed; }
+
+  /* ===== CARD ACTIONS ===== */
+  .card-actions {
+    display: flex; gap: 8px; margin-top: 10px;
+    padding-top: 10px; border-top: 1px solid var(--border);
+  }
+  .card-action {
+    background: none; border: none; color: var(--text-sub);
+    font-size: 12px; cursor: pointer; padding: 4px 8px;
+    font-family: 'Noto Sans JP', sans-serif;
+    display: flex; align-items: center; gap: 4px;
+  }
+  .card-action:hover { color: var(--primary-light); }
+
+  /* ===== THEME BAR (review) ===== */
+  .theme-bar-container { margin-bottom: 8px; }
+  .theme-bar-row {
+    display: flex; align-items: center; gap: 8px; margin-bottom: 6px;
+  }
+  .theme-bar-label { font-size: 12px; width: 80px; flex-shrink: 0; text-align: right; }
+  .theme-bar-track {
+    flex: 1; height: 20px; background: var(--bg);
+    border-radius: 4px; overflow: hidden; display: flex;
+  }
+  .theme-bar-good { background: var(--green); height: 100%; }
+  .theme-bar-improve { background: var(--orange); height: 100%; }
+  .theme-bar-drill { background: var(--purple); height: 100%; }
+  .theme-bar-count { font-size: 11px; color: var(--text-sub); width: 30px; text-align: right; }
+</style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header>
+  <div class="header-inner">
+    <div class="logo">
+      <span class="logo-icon">⚽</span>
+      <span class="logo-text">観察ノート</span>
+      <span class="logo-ver">v1.0</span>
+    </div>
+    <button class="btn-reload" onclick="loadData()">↻ 更新</button>
+  </div>
+</header>
+
+<!-- ===== MAIN ===== -->
+<main>
+  <!-- TIMELINE -->
+  <div id="section-timeline" class="section active">
+    <div class="filter-row" id="typeFilter"></div>
+    <div id="timelineList"></div>
+  </div>
+
+  <!-- RECORD -->
+  <div id="section-record" class="section">
+    <div class="card">
+      <div class="form-group">
+        <label class="form-label">日付</label>
+        <input type="date" id="entryDate" class="form-input">
+      </div>
+      <div class="form-group">
+        <label class="form-label">タイトル</label>
+        <input type="text" id="entryTitle" class="form-input" placeholder="対戦相手・練習内容など">
+      </div>
+      <div class="form-group">
+        <label class="form-label">種別</label>
+        <div class="type-selector">
+          <div class="type-option selected" data-type="game" onclick="selectType('game')">
+            <span class="type-option-icon">🏟️</span>試合
+          </div>
+          <div class="type-option" data-type="practice" onclick="selectType('practice')">
+            <span class="type-option-icon">🏃</span>練習
+          </div>
+          <div class="type-option" data-type="school" onclick="selectType('school')">
+            <span class="type-option-icon">🏫</span>スクール
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">メモ（自由記述）</label>
+        <textarea id="entryNote" class="form-textarea" placeholder="全体的な感想など..." rows="3"></textarea>
+      </div>
+      <div class="form-group">
+        <label class="form-label">観察アイテム</label>
+        <div class="items-form" id="itemsForm"></div>
+        <button class="btn-add-item" onclick="addItemRow()">＋ アイテム追加</button>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-ghost" onclick="clearForm()">クリア</button>
+        <button class="btn btn-primary" onclick="saveEntry()">保存</button>
+      </div>
+      <div id="editEntryId" style="display:none;"></div>
+    </div>
+  </div>
+
+  <!-- REVIEW -->
+  <div id="section-review" class="section">
+    <div class="sub-tabs">
+      <button class="sub-tab active" onclick="showSubTab('theme')">テーマ別</button>
+      <button class="sub-tab" onclick="showSubTab('repeat')">繰り返し</button>
+      <button class="sub-tab" onclick="showSubTab('kids')">子供と振り返り</button>
+    </div>
+    <div id="subtab-theme" class="subtab-content"></div>
+    <div id="subtab-repeat" class="subtab-content" style="display:none;"></div>
+    <div id="subtab-kids" class="subtab-content" style="display:none;">
+      <div class="card" style="text-align:center;">
+        <div style="font-size:48px;margin-bottom:12px;">🌟</div>
+        <p style="font-size:14px;font-weight:700;margin-bottom:12px;">子供と一緒に振り返ろう</p>
+        <p style="font-size:13px;color:var(--text-sub);margin-bottom:16px;">最近のハイライト、成長ポイント、<br>次のチャレンジをカード形式で表示します</p>
+        <button class="btn btn-primary" onclick="openKidsReview()">振り返りを始める</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SETTINGS -->
+  <div id="section-settings" class="section">
+    <div class="card">
+      <div class="setting-item">
+        <div>
+          <div class="setting-label">テーマ管理</div>
+          <div class="setting-desc">テーマの追加・編集</div>
+        </div>
+        <button class="btn btn-ghost btn-sm" onclick="openThemeManager()">管理</button>
+      </div>
+      <div class="setting-item">
+        <div>
+          <div class="setting-label">データ再読み込み</div>
+          <div class="setting-desc">サーバーからデータを再取得</div>
+        </div>
+        <button class="btn btn-ghost btn-sm" onclick="loadData()">再読み込み</button>
+      </div>
+      <div class="setting-item">
+        <div>
+          <div class="setting-label">GAS URL設定</div>
+          <div class="setting-desc" id="gasUrlDisplay">未設定</div>
+        </div>
+        <button class="btn btn-ghost btn-sm" onclick="openGasUrlModal()">設定</button>
+      </div>
+      <div class="setting-item">
+        <div>
+          <div class="setting-label">ローカルキャッシュクリア</div>
+          <div class="setting-desc">保存されたキャッシュを削除</div>
+        </div>
+        <button class="btn btn-ghost btn-sm" onclick="clearCache()">クリア</button>
+      </div>
+      <div class="setting-item" style="border-bottom:none;">
+        <div>
+          <div class="setting-label">バージョン</div>
+          <div class="setting-desc">v1.0 / サッカー観察ノート</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- ===== BOTTOM NAV ===== -->
+<div class="bottom-nav">
+  <button class="nav-item active" id="nav-timeline" onclick="showTab('timeline')">
+    <span class="nav-icon">📋</span>タイムライン
+  </button>
+  <button class="nav-item" id="nav-record" onclick="showTab('record')">
+    <span class="nav-icon">✏️</span>記録
+  </button>
+  <button class="nav-item" id="nav-review" onclick="showTab('review')">
+    <span class="nav-icon">📊</span>振り返り
+  </button>
+  <button class="nav-item" id="nav-settings" onclick="showTab('settings')">
+    <span class="nav-icon">⚙️</span>設定
+  </button>
+</div>
+
+<!-- ===== TOAST ===== -->
+<div id="toast"></div>
+
+<!-- ===== ENTRY DETAIL OVERLAY ===== -->
+<div class="overlay" id="entryOverlay">
+  <div class="modal" style="position:relative;">
+    <div class="modal-title" id="entryModalTitle">メモ詳細</div>
+    <div id="entryModalBody"></div>
+    <div class="btn-row" style="margin-top:16px;">
+      <button class="btn btn-ghost" onclick="closeEntryModal()">閉じる</button>
+      <button class="btn btn-ghost" id="btnEditEntry" onclick="editEntry()">編集</button>
+      <button class="btn btn-danger btn-sm" id="btnDeleteEntry" onclick="deleteEntry()">削除</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== GAS URL MODAL ===== -->
+<div class="overlay" id="gasUrlOverlay">
+  <div class="modal" style="position:relative;">
+    <div class="modal-title">GAS URL設定</div>
+    <div class="form-group">
+      <label class="form-label">Google Apps Script Web App URL</label>
+      <input type="url" id="gasUrlInput" class="form-input" placeholder="https://script.google.com/macros/s/.../exec">
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-ghost" onclick="closeGasUrlModal()">キャンセル</button>
+      <button class="btn btn-primary" onclick="saveGasUrl()">保存</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== THEME MANAGER MODAL ===== -->
+<div class="overlay" id="themeOverlay">
+  <div class="modal" style="position:relative;">
+    <div class="modal-title">テーマ管理</div>
+    <div id="themeList"></div>
+    <div class="form-group" style="margin-top:16px;">
+      <label class="form-label">新規テーマ追加</label>
+      <div style="display:flex;gap:8px;">
+        <input type="text" id="newThemeIcon" class="form-input" placeholder="絵文字" style="width:60px;">
+        <input type="text" id="newThemeName" class="form-input" placeholder="テーマ名" style="flex:1;">
+        <button class="btn btn-primary btn-sm" onclick="addTheme()">追加</button>
+      </div>
+    </div>
+    <button class="btn btn-ghost" style="width:100%;margin-top:12px;" onclick="closeThemeManager()">閉じる</button>
+  </div>
+</div>
+
+<!-- ===== KIDS REVIEW OVERLAY ===== -->
+<div class="kids-overlay" id="kidsOverlay">
+  <div class="kids-header">
+    <span class="kids-title">🌟 振り返りタイム</span>
+    <button class="kids-close" onclick="closeKidsReview()">✕ とじる</button>
+  </div>
+  <div class="kids-nav-dots" id="kidsDots"></div>
+  <div class="kids-content" id="kidsContent">
+    <div class="kids-card-container" id="kidsCards"></div>
+  </div>
+  <div class="kids-nav-arrows">
+    <button class="kids-arrow" id="kidsPrev" onclick="kidsNav(-1)">← もどる</button>
+    <button class="kids-arrow" id="kidsNext" onclick="kidsNav(1)">つぎへ →</button>
+  </div>
+</div>
+
+<script>
+// ===== CONFIG =====
+const VERSION = '1.0';
+const CACHE_KEY = 'soccer-note-cache';
+const GAS_URL_KEY = 'soccer-note-gas-url';
+const TYPE_LABELS = { game: '試合', practice: '練習', school: 'スクール' };
+const TYPE_CLASSES = { game: 'type-game', practice: 'type-practice', school: 'type-school' };
+const TAG_LABELS = { good: '良い', improve: '改善', drill: '練習' };
+
+// ===== STATE =====
+let state = { entries: [], items: [], themes: [] };
+let currentFilter = 'all';
+let currentSubTab = 'theme';
+let editingEntryId = null;
+let kidsPage = 0;
+let kidsPages = [];
+
+// ===== INIT =====
+function init() {
+  document.getElementById('entryDate').value = new Date().toISOString().slice(0, 10);
+  loadFromCache();
+  renderAll();
+  addItemRow();
+  updateGasUrlDisplay();
+  setTimeout(loadData, 300);
+}
+
+// ===== GAS URL =====
+function getGasUrl() {
+  return localStorage.getItem(GAS_URL_KEY) || '';
+}
+function openGasUrlModal() {
+  document.getElementById('gasUrlInput').value = getGasUrl();
+  document.getElementById('gasUrlOverlay').classList.add('show');
+}
+function closeGasUrlModal() {
+  document.getElementById('gasUrlOverlay').classList.remove('show');
+}
+function saveGasUrl() {
+  const url = document.getElementById('gasUrlInput').value.trim();
+  localStorage.setItem(GAS_URL_KEY, url);
+  updateGasUrlDisplay();
+  closeGasUrlModal();
+  showToast('GAS URLを保存しました');
+  loadData();
+}
+function updateGasUrlDisplay() {
+  const url = getGasUrl();
+  document.getElementById('gasUrlDisplay').textContent = url ? url.slice(0, 50) + '...' : '未設定';
+}
+
+// ===== API =====
+async function gasRequest(body) {
+  const url = getGasUrl();
+  if (!url) return null;
+  const timeout = new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 15000));
+  try {
+    const res = await Promise.race([
+      fetch(url, { method: 'POST', body: JSON.stringify(body) }),
+      timeout
+    ]);
+    return await res.json();
+  } catch (e) {
+    try {
+      const res = await Promise.race([
+        fetch(url + '?action=' + (body.action || 'getAll')),
+        new Promise((_, rej) => setTimeout(() => rej(new Error('timeout')), 15000))
+      ]);
+      return await res.json();
+    } catch (e2) {
+      return null;
+    }
+  }
+}
+
+async function loadData() {
+  showToast('読み込み中...');
+  const data = await gasRequest({ action: 'getAll' });
+  if (data && !data.error) {
+    state.entries = Array.isArray(data.entries) ? data.entries : [];
+    state.items = Array.isArray(data.items) ? data.items : [];
+    state.themes = Array.isArray(data.themes) ? data.themes : [];
+    saveToCache();
+    renderAll();
+    showToast('更新しました');
+  } else {
+    showToast(getGasUrl() ? '通信できませんでした' : 'GAS URLを設定してください');
+  }
+}
+
+// ===== CACHE =====
+function saveToCache() {
+  try { localStorage.setItem(CACHE_KEY, JSON.stringify(state)); } catch (e) {}
+}
+function loadFromCache() {
+  try {
+    const d = JSON.parse(localStorage.getItem(CACHE_KEY));
+    if (d) {
+      state.entries = d.entries || [];
+      state.items = d.items || [];
+      state.themes = d.themes || [];
+    }
+  } catch (e) {}
+}
+function clearCache() {
+  localStorage.removeItem(CACHE_KEY);
+  showToast('キャッシュをクリアしました');
+}
+
+// ===== TABS =====
+function showTab(name) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(t => t.classList.remove('active'));
+  document.getElementById('section-' + name).classList.add('active');
+  document.getElementById('nav-' + name).classList.add('active');
+  if (name === 'review') renderReview();
+}
+
+function showSubTab(name) {
+  currentSubTab = name;
+  document.querySelectorAll('.sub-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.subtab-content').forEach(c => c.style.display = 'none');
+  event.target.classList.add('active');
+  document.getElementById('subtab-' + name).style.display = 'block';
+  if (name === 'theme') renderThemeReview();
+  if (name === 'repeat') renderRepeatDetection();
+}
+
+// ===== RENDER ALL =====
+function renderAll() {
+  renderTimeline();
+  renderTypeFilter();
+}
+
+// ===== TYPE FILTER =====
+function renderTypeFilter() {
+  const counts = { all: state.entries.length };
+  state.entries.forEach(e => { counts[e.type] = (counts[e.type] || 0) + 1; });
+  const container = document.getElementById('typeFilter');
+  const filters = [
+    { key: 'all', label: 'すべて' },
+    { key: 'game', label: '試合' },
+    { key: 'practice', label: '練習' },
+    { key: 'school', label: 'スクール' },
+  ];
+  container.innerHTML = filters.map(f =>
+    `<button class="filter-btn ${currentFilter === f.key ? 'active' : ''}" onclick="setFilter('${f.key}')">${f.label}(${counts[f.key] || 0})</button>`
+  ).join('');
+}
+
+function setFilter(f) {
+  currentFilter = f;
+  renderTypeFilter();
+  renderTimeline();
+}
+
+// ===== TIMELINE =====
+function renderTimeline() {
+  const container = document.getElementById('timelineList');
+  let entries = [...state.entries].sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+  if (currentFilter !== 'all') entries = entries.filter(e => e.type === currentFilter);
+
+  if (!entries.length) {
+    container.innerHTML = `<div class="empty-state"><div class="empty-icon">📝</div><p>まだメモがありません<br>「記録」タブから最初のメモを追加しましょう</p></div>`;
+    return;
+  }
+
+  container.innerHTML = entries.map(entry => {
+    const entryItems = state.items.filter(it => String(it.entryId) === String(entry.id));
+    const typeClass = TYPE_CLASSES[entry.type] || 'type-game';
+    const typeLabel = TYPE_LABELS[entry.type] || entry.type;
+    const dateStr = formatDate(entry.date);
+
+    let itemsHtml = '';
+    if (entryItems.length) {
+      itemsHtml = '<div class="item-list">' + entryItems.sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0)).map(it => {
+        const tagClass = 'tag-' + (it.tag || 'good');
+        const tagLabel = TAG_LABELS[it.tag] || it.tag || '良い';
+        const themes = (it.theme || '').split(',').filter(Boolean);
+        const themesHtml = themes.length
+          ? '<div class="item-themes">' + themes.map(t => `<span class="theme-chip">${getThemeIcon(t)}${t}</span>`).join('') + '</div>'
+          : '';
+        return `<div class="item-row ${tagClass}"><span class="item-tag">${tagLabel}</span><div><div class="item-text">${escHtml(it.text)}</div>${themesHtml}</div></div>`;
+      }).join('') + '</div>';
+    }
+
+    const noteHtml = entry.note ? `<div class="card-note">${escHtml(entry.note)}</div>` : '';
+
+    return `<div class="card" onclick="openEntryDetail('${entry.id}')">
+      <div class="card-header">
+        <span class="card-date">${dateStr}</span>
+        <span class="card-type ${typeClass}">${typeLabel}</span>
+      </div>
+      <div class="card-title">${escHtml(entry.title) || '（タイトルなし）'}</div>
+      ${noteHtml}${itemsHtml}
+    </div>`;
+  }).join('');
+}
+
+// ===== ENTRY DETAIL =====
+function openEntryDetail(id) {
+  const entry = state.entries.find(e => String(e.id) === String(id));
+  if (!entry) return;
+  editingEntryId = id;
+  const items = state.items.filter(it => String(it.entryId) === String(id));
+
+  document.getElementById('entryModalTitle').textContent = entry.title || '（タイトルなし）';
+  let html = `<div style="margin-bottom:12px;">
+    <span class="card-type ${TYPE_CLASSES[entry.type] || ''}">${TYPE_LABELS[entry.type] || entry.type}</span>
+    <span class="card-date" style="margin-left:8px;">${formatDate(entry.date)}</span>
+  </div>`;
+  if (entry.note) html += `<div class="card-note">${escHtml(entry.note)}</div>`;
+  if (items.length) {
+    html += '<div class="item-list" style="margin-top:12px;">' + items.sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0)).map(it => {
+      const tagClass = 'tag-' + (it.tag || 'good');
+      const tagLabel = TAG_LABELS[it.tag] || it.tag;
+      const themes = (it.theme || '').split(',').filter(Boolean);
+      const themesHtml = themes.length
+        ? '<div class="item-themes">' + themes.map(t => `<span class="theme-chip">${getThemeIcon(t)}${t}</span>`).join('') + '</div>'
+        : '';
+      return `<div class="item-row ${tagClass}"><span class="item-tag">${tagLabel}</span><div><div class="item-text">${escHtml(it.text)}</div>${themesHtml}</div></div>`;
+    }).join('') + '</div>';
+  }
+  document.getElementById('entryModalBody').innerHTML = html;
+  document.getElementById('entryOverlay').classList.add('show');
+}
+
+function closeEntryModal() {
+  document.getElementById('entryOverlay').classList.remove('show');
+}
+
+function editEntry() {
+  if (!editingEntryId) return;
+  const entry = state.entries.find(e => String(e.id) === String(editingEntryId));
+  if (!entry) return;
+  closeEntryModal();
+  showTab('record');
+
+  document.getElementById('entryDate').value = entry.date || '';
+  document.getElementById('entryTitle').value = entry.title || '';
+  document.getElementById('entryNote').value = entry.note || '';
+  document.getElementById('editEntryId').textContent = entry.id;
+  selectType(entry.type || 'game');
+
+  const items = state.items.filter(it => String(it.entryId) === String(entry.id));
+  document.getElementById('itemsForm').innerHTML = '';
+  if (items.length) {
+    items.sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0)).forEach(it => {
+      addItemRow(it);
+    });
+  } else {
+    addItemRow();
+  }
+}
+
+async function deleteEntry() {
+  if (!editingEntryId) return;
+  if (!confirm('このメモを削除しますか？')) return;
+  const id = editingEntryId;
+  state.entries = state.entries.filter(e => String(e.id) !== String(id));
+  state.items = state.items.filter(it => String(it.entryId) !== String(id));
+  saveToCache();
+  renderAll();
+  closeEntryModal();
+  showToast('削除しました');
+  gasRequest({ action: 'deleteEntry', id });
+}
+
+// ===== RECORD FORM =====
+function selectType(type) {
+  document.querySelectorAll('.type-option').forEach(el => {
+    el.classList.toggle('selected', el.dataset.type === type);
+  });
+}
+
+function getSelectedType() {
+  const el = document.querySelector('.type-option.selected');
+  return el ? el.dataset.type : 'game';
+}
+
+function addItemRow(data) {
+  const container = document.getElementById('itemsForm');
+  const idx = container.children.length;
+  const div = document.createElement('div');
+  div.className = 'item-form-row';
+  div.dataset.itemId = (data && data.id) || '';
+
+  const themes = state.themes.length ? state.themes : [];
+  const selectedThemes = data ? (data.theme || '').split(',').filter(Boolean) : [];
+  const themeBtns = themes.sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0)).map(t =>
+    `<button type="button" class="theme-toggle ${selectedThemes.includes(t.name) ? 'selected' : ''}" data-theme="${escAttr(t.name)}" onclick="this.classList.toggle('selected')">${t.icon || ''} ${escHtml(t.name)}</button>`
+  ).join('');
+
+  div.innerHTML = `<div class="item-form-main">
+    <textarea class="item-form-text" placeholder="観察メモ..." rows="1" oninput="autoResize(this)">${escHtml(data ? data.text || '' : '')}</textarea>
+    <div class="item-form-meta">
+      <select class="tag-select" data-field="tag">
+        <option value="good" ${data && data.tag === 'good' ? 'selected' : ''}>良い</option>
+        <option value="improve" ${data && data.tag === 'improve' ? 'selected' : ''}>改善</option>
+        <option value="drill" ${data && data.tag === 'drill' ? 'selected' : ''}>練習</option>
+      </select>
+      ${themeBtns}
+    </div>
+  </div>
+  <button class="btn-remove-item" onclick="this.parentElement.remove()">×</button>`;
+  container.appendChild(div);
+
+  const textarea = div.querySelector('.item-form-text');
+  setTimeout(() => autoResize(textarea), 0);
+}
+
+function autoResize(el) {
+  el.style.height = 'auto';
+  el.style.height = el.scrollHeight + 'px';
+}
+
+function clearForm() {
+  document.getElementById('entryDate').value = new Date().toISOString().slice(0, 10);
+  document.getElementById('entryTitle').value = '';
+  document.getElementById('entryNote').value = '';
+  document.getElementById('editEntryId').textContent = '';
+  selectType('game');
+  document.getElementById('itemsForm').innerHTML = '';
+  addItemRow();
+  editingEntryId = null;
+}
+
+async function saveEntry() {
+  const date = document.getElementById('entryDate').value;
+  const title = document.getElementById('entryTitle').value.trim();
+  if (!date) { showToast('日付を入力してください'); return; }
+
+  const existingId = document.getElementById('editEntryId').textContent;
+  const entryId = existingId || String(Date.now());
+  const now = new Date().toISOString();
+
+  const entry = {
+    id: entryId, date, title: title || '（タイトルなし）',
+    type: getSelectedType(), note: document.getElementById('entryNote').value.trim(),
+    createdAt: existingId ? (state.entries.find(e => e.id === existingId) || {}).createdAt || now : now
+  };
+
+  // Collect items
+  const itemRows = document.querySelectorAll('#itemsForm .item-form-row');
+  const items = [];
+  itemRows.forEach((row, i) => {
+    const text = row.querySelector('.item-form-text').value.trim();
+    if (!text) return;
+    const tag = row.querySelector('.tag-select').value;
+    const selectedThemes = Array.from(row.querySelectorAll('.theme-toggle.selected')).map(b => b.dataset.theme);
+    items.push({
+      id: row.dataset.itemId || String(Date.now() + i + 1),
+      entryId: entryId, text, tag,
+      theme: selectedThemes.join(','),
+      sortOrder: i
+    });
+  });
+
+  // Optimistic update
+  if (existingId) {
+    const idx = state.entries.findIndex(e => String(e.id) === String(existingId));
+    if (idx >= 0) state.entries[idx] = entry;
+    state.items = state.items.filter(it => String(it.entryId) !== String(existingId));
+  } else {
+    state.entries.push(entry);
+  }
+  state.items.push(...items);
+  saveToCache();
+  renderAll();
+
+  clearForm();
+  showTab('timeline');
+  showToast('保存しました');
+
+  // Async save to GAS
+  await gasRequest({ action: 'bulkSaveEntry', entry, items });
+}
+
+// ===== REVIEW =====
+function renderReview() {
+  if (currentSubTab === 'theme') renderThemeReview();
+  else if (currentSubTab === 'repeat') renderRepeatDetection();
+}
+
+function renderThemeReview() {
+  const container = document.getElementById('subtab-theme');
+  if (!state.items.length) {
+    container.innerHTML = '<div class="empty-state"><div class="empty-icon">📊</div><p>まだ観察データがありません</p></div>';
+    return;
+  }
+
+  // Group items by theme
+  const themeMap = {};
+  state.items.forEach(it => {
+    const themes = (it.theme || '').split(',').filter(Boolean);
+    if (!themes.length) themes.push('未分類');
+    themes.forEach(t => {
+      if (!themeMap[t]) themeMap[t] = [];
+      themeMap[t].push(it);
+    });
+  });
+
+  // Sort themes by configured order
+  const themeOrder = {};
+  state.themes.forEach(t => { themeOrder[t.name] = t.sortOrder || 99; });
+
+  const sortedThemes = Object.keys(themeMap).sort((a, b) => (themeOrder[a] || 99) - (themeOrder[b] || 99));
+
+  // Build theme bar chart + item lists
+  let html = '<div class="theme-bar-container">';
+  const maxCount = Math.max(...sortedThemes.map(t => themeMap[t].length));
+  sortedThemes.forEach(t => {
+    const items = themeMap[t];
+    const good = items.filter(i => i.tag === 'good').length;
+    const improve = items.filter(i => i.tag === 'improve').length;
+    const drill = items.filter(i => i.tag === 'drill').length;
+    const total = items.length;
+    const pct = (v) => (v / maxCount * 100).toFixed(1);
+    html += `<div class="theme-bar-row">
+      <span class="theme-bar-label">${getThemeIcon(t)} ${escHtml(t)}</span>
+      <div class="theme-bar-track">
+        <div class="theme-bar-good" style="width:${pct(good)}%"></div>
+        <div class="theme-bar-improve" style="width:${pct(improve)}%"></div>
+        <div class="theme-bar-drill" style="width:${pct(drill)}%"></div>
+      </div>
+      <span class="theme-bar-count">${total}</span>
+    </div>`;
+  });
+  html += '</div>';
+
+  html += '<div style="display:flex;gap:12px;margin:12px 0 16px;font-size:11px;color:var(--text-sub);">';
+  html += '<span><span style="display:inline-block;width:10px;height:10px;background:var(--green);border-radius:2px;vertical-align:middle;"></span> 良い</span>';
+  html += '<span><span style="display:inline-block;width:10px;height:10px;background:var(--orange);border-radius:2px;vertical-align:middle;"></span> 改善</span>';
+  html += '<span><span style="display:inline-block;width:10px;height:10px;background:var(--purple);border-radius:2px;vertical-align:middle;"></span> 練習</span>';
+  html += '</div>';
+
+  // Detailed sections
+  sortedThemes.forEach(t => {
+    const items = themeMap[t];
+    html += `<div class="theme-section">
+      <div class="theme-header">
+        <span class="theme-icon">${getThemeIcon(t)}</span>
+        <span>${escHtml(t)}</span>
+        <span class="theme-count">${items.length}件</span>
+      </div>
+      <div class="item-list">`;
+    items.sort((a, b) => {
+      const ea = state.entries.find(e => String(e.id) === String(a.entryId));
+      const eb = state.entries.find(e => String(e.id) === String(b.entryId));
+      return ((eb && eb.date) || '').localeCompare((ea && ea.date) || '');
+    }).slice(0, 10).forEach(it => {
+      const entry = state.entries.find(e => String(e.id) === String(it.entryId));
+      const dateStr = entry ? formatDateShort(entry.date) : '';
+      const tagClass = 'tag-' + (it.tag || 'good');
+      html += `<div class="item-row ${tagClass}"><span class="item-tag">${TAG_LABELS[it.tag] || it.tag}</span><div><div class="item-text">${escHtml(it.text)}</div><div style="font-size:10px;color:var(--text-sub);margin-top:2px;">${dateStr} ${entry ? escHtml(entry.title || '') : ''}</div></div></div>`;
+    });
+    html += '</div></div>';
+  });
+
+  container.innerHTML = html;
+}
+
+function renderRepeatDetection() {
+  const container = document.getElementById('subtab-repeat');
+  if (!state.items.length) {
+    container.innerHTML = '<div class="empty-state"><div class="empty-icon">🔍</div><p>まだ観察データがありません</p></div>';
+    return;
+  }
+
+  // Find repeating patterns: items with similar text that appear multiple times
+  const improveItems = state.items.filter(it => it.tag === 'improve');
+  const textCounts = {};
+  improveItems.forEach(it => {
+    const key = normalizeText(it.text);
+    if (!textCounts[key]) textCounts[key] = { text: it.text, dates: [], items: [] };
+    const entry = state.entries.find(e => String(e.id) === String(it.entryId));
+    if (entry) textCounts[key].dates.push(entry.date);
+    textCounts[key].items.push(it);
+  });
+
+  // Also check theme-based repeats
+  const themeRepeats = {};
+  improveItems.forEach(it => {
+    const themes = (it.theme || '').split(',').filter(Boolean);
+    themes.forEach(t => {
+      if (!themeRepeats[t]) themeRepeats[t] = [];
+      themeRepeats[t].push(it);
+    });
+  });
+
+  let html = '<h3 style="font-size:14px;font-weight:700;margin-bottom:12px;">同じ改善点の繰り返し</h3>';
+
+  const repeats = Object.values(textCounts).filter(v => v.dates.length >= 2)
+    .sort((a, b) => b.dates.length - a.dates.length);
+
+  if (repeats.length) {
+    repeats.forEach(r => {
+      const dates = [...new Set(r.dates)].sort().reverse();
+      html += `<div class="repeat-card">
+        <div class="repeat-count">${r.dates.length}回 繰り返し</div>
+        <div class="repeat-text">${escHtml(r.text)}</div>
+        <div class="repeat-dates">${dates.map(formatDateShort).join(', ')}</div>
+      </div>`;
+    });
+  } else {
+    html += '<div class="card"><p style="font-size:13px;color:var(--text-sub);">繰り返されている改善点はまだ検出されていません</p></div>';
+  }
+
+  // Theme-based repeats
+  html += '<h3 style="font-size:14px;font-weight:700;margin:20px 0 12px;">テーマ別の改善点数</h3>';
+  const sortedThemeRepeats = Object.entries(themeRepeats)
+    .sort((a, b) => b[1].length - a[1].length);
+
+  if (sortedThemeRepeats.length) {
+    sortedThemeRepeats.forEach(([theme, items]) => {
+      html += `<div class="card" style="margin-bottom:8px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <span style="font-weight:700;">${getThemeIcon(theme)} ${escHtml(theme)}</span>
+          <span style="font-size:13px;color:var(--orange);font-weight:700;">${items.length}件の改善点</span>
+        </div>
+      </div>`;
+    });
+  } else {
+    html += '<div class="card"><p style="font-size:13px;color:var(--text-sub);">テーマ付きの改善点がありません</p></div>';
+  }
+
+  container.innerHTML = html;
+}
+
+// ===== KIDS REVIEW =====
+function openKidsReview() {
+  buildKidsPages();
+  kidsPage = 0;
+  renderKidsPage();
+  document.getElementById('kidsOverlay').classList.add('show');
+}
+
+function closeKidsReview() {
+  document.getElementById('kidsOverlay').classList.remove('show');
+}
+
+function buildKidsPages() {
+  kidsPages = [];
+
+  // Page 1: Recent highlights (good items)
+  const recentGood = state.items.filter(i => i.tag === 'good')
+    .map(i => ({ ...i, entry: state.entries.find(e => String(e.id) === String(i.entryId)) }))
+    .filter(i => i.entry)
+    .sort((a, b) => (b.entry.date || '').localeCompare(a.entry.date || ''))
+    .slice(0, 5);
+
+  kidsPages.push({
+    icon: '🌟', title: '最近のハイライト',
+    body: recentGood.length
+      ? recentGood.map(i => `<div class="kids-item kids-item-good">${escHtml(i.text)}<div style="font-size:11px;color:var(--text-sub);margin-top:4px;">${formatDateShort(i.entry.date)}</div></div>`).join('')
+      : '<p style="color:var(--text-sub);">まだデータがありません</p>'
+  });
+
+  // Page 2: Growth points (improve→good transitions by theme)
+  const growthItems = findGrowthPoints();
+  kidsPages.push({
+    icon: '📈', title: '成長ポイント',
+    body: growthItems.length
+      ? growthItems.map(g => `<div class="kids-item kids-item-good" style="margin-bottom:10px;">
+          <div style="font-weight:700;margin-bottom:6px;">${getThemeIcon(g.theme)} ${escHtml(g.theme)}</div>
+          <div style="font-size:12px;color:var(--text-sub);text-decoration:line-through;margin-bottom:4px;">${escHtml(g.before)}</div>
+          <div style="font-size:14px;">→ ${escHtml(g.after)}</div>
+        </div>`).join('')
+      : '<p style="color:var(--text-sub);">まだ成長データが蓄積されていません<br>記録を続けると成長が見えてきます</p>'
+  });
+
+  // Page 3: Next challenges (improve items, positively reframed)
+  const recentImprove = state.items.filter(i => i.tag === 'improve')
+    .map(i => ({ ...i, entry: state.entries.find(e => String(e.id) === String(i.entryId)) }))
+    .filter(i => i.entry)
+    .sort((a, b) => (b.entry.date || '').localeCompare(a.entry.date || ''))
+    .slice(0, 5);
+
+  kidsPages.push({
+    icon: '🎯', title: '次のチャレンジ',
+    body: recentImprove.length
+      ? recentImprove.map(i => `<div class="kids-item" style="background:var(--primary-pale);">${positiveReframe(i.text)}</div>`).join('')
+      : '<p style="color:var(--text-sub);">改善ポイントがまだありません</p>'
+  });
+
+  // Page 4: Theme summary
+  const themeSummary = {};
+  state.items.forEach(it => {
+    const themes = (it.theme || '').split(',').filter(Boolean);
+    themes.forEach(t => {
+      if (!themeSummary[t]) themeSummary[t] = 0;
+      themeSummary[t]++;
+    });
+  });
+  const sortedSummary = Object.entries(themeSummary).sort((a, b) => b[1] - a[1]).slice(0, 6);
+
+  kidsPages.push({
+    icon: '📊', title: 'テーマ別サマリー',
+    body: sortedSummary.length
+      ? '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">' +
+        sortedSummary.map(([t, c]) =>
+          `<div style="background:var(--bg);border-radius:12px;padding:14px;text-align:center;">
+            <div style="font-size:28px;">${getThemeIcon(t)}</div>
+            <div style="font-size:12px;font-weight:700;margin-top:4px;">${escHtml(t)}</div>
+            <div style="font-size:20px;font-weight:900;color:var(--primary-light);">${c}</div>
+          </div>`
+        ).join('') + '</div>'
+      : '<p style="color:var(--text-sub);">テーマデータがありません</p>'
+  });
+
+  // Page 5: Stats
+  const totalEntries = state.entries.length;
+  const totalItems = state.items.length;
+  const goodCount = state.items.filter(i => i.tag === 'good').length;
+  const improveCount = state.items.filter(i => i.tag === 'improve').length;
+
+  kidsPages.push({
+    icon: '🏆', title: '記録スタッツ',
+    body: `<div class="kids-stat-grid">
+      <div class="kids-stat"><div class="kids-stat-num">${totalEntries}</div><div class="kids-stat-label">記録数</div></div>
+      <div class="kids-stat"><div class="kids-stat-num">${totalItems}</div><div class="kids-stat-label">観察ポイント</div></div>
+      <div class="kids-stat"><div class="kids-stat-num">${goodCount}</div><div class="kids-stat-label">良いポイント</div></div>
+      <div class="kids-stat"><div class="kids-stat-num">${improveCount}</div><div class="kids-stat-label">チャレンジ</div></div>
+    </div>`
+  });
+}
+
+function findGrowthPoints() {
+  const results = [];
+  const themeItems = {};
+  state.items.forEach(it => {
+    const themes = (it.theme || '').split(',').filter(Boolean);
+    const entry = state.entries.find(e => String(e.id) === String(it.entryId));
+    if (!entry) return;
+    themes.forEach(t => {
+      if (!themeItems[t]) themeItems[t] = [];
+      themeItems[t].push({ ...it, date: entry.date });
+    });
+  });
+
+  Object.entries(themeItems).forEach(([theme, items]) => {
+    items.sort((a, b) => (a.date || '').localeCompare(b.date || ''));
+    // Look for improve followed by good in same theme
+    const improves = items.filter(i => i.tag === 'improve');
+    const goods = items.filter(i => i.tag === 'good');
+    improves.forEach(imp => {
+      const laterGood = goods.find(g => g.date > imp.date);
+      if (laterGood) {
+        if (!results.find(r => r.theme === theme && r.before === imp.text)) {
+          results.push({ theme, before: imp.text, after: laterGood.text });
+        }
+      }
+    });
+  });
+  return results.slice(0, 5);
+}
+
+function positiveReframe(text) {
+  // Simple positive reframing
+  const reframes = [
+    [/できなかった/g, 'チャレンジ中の'],
+    [/弱い/g, 'もっと強くなれる'],
+    [/遅い/g, 'スピードアップ目標'],
+    [/ミスが多い/g, '練習で上達できる'],
+    [/ない$/g, 'ようになろう！'],
+  ];
+  let result = text;
+  reframes.forEach(([pat, rep]) => { result = result.replace(pat, rep); });
+  if (result === text) result = '「' + text + '」を頑張ろう！';
+  return result;
+}
+
+function renderKidsPage() {
+  const dotsHtml = kidsPages.map((_, i) =>
+    `<div class="kids-dot ${i === kidsPage ? 'active' : ''}"></div>`
+  ).join('');
+  document.getElementById('kidsDots').innerHTML = dotsHtml;
+
+  document.getElementById('kidsCards').innerHTML = kidsPages.map(p =>
+    `<div class="kids-card"><div class="kids-card-inner">
+      <div class="kids-card-icon">${p.icon}</div>
+      <div class="kids-card-title">${p.title}</div>
+      <div class="kids-card-body">${p.body}</div>
+    </div></div>`
+  ).join('');
+
+  document.getElementById('kidsCards').style.transform = `translateX(-${kidsPage * 100}%)`;
+  document.getElementById('kidsPrev').disabled = kidsPage === 0;
+  document.getElementById('kidsNext').disabled = kidsPage === kidsPages.length - 1;
+}
+
+function kidsNav(dir) {
+  kidsPage = Math.max(0, Math.min(kidsPages.length - 1, kidsPage + dir));
+  renderKidsPage();
+}
+
+// ===== THEME MANAGER =====
+function openThemeManager() {
+  renderThemeList();
+  document.getElementById('themeOverlay').classList.add('show');
+}
+function closeThemeManager() {
+  document.getElementById('themeOverlay').classList.remove('show');
+}
+function renderThemeList() {
+  const container = document.getElementById('themeList');
+  const sorted = [...state.themes].sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0));
+  container.innerHTML = sorted.map(t =>
+    `<div class="setting-item"><span>${t.icon || ''} ${escHtml(t.name)}</span><span style="font-size:12px;color:var(--text-sub);">順序: ${t.sortOrder}</span></div>`
+  ).join('');
+}
+async function addTheme() {
+  const icon = document.getElementById('newThemeIcon').value.trim();
+  const name = document.getElementById('newThemeName').value.trim();
+  if (!name) { showToast('テーマ名を入力してください'); return; }
+  const maxOrder = state.themes.reduce((m, t) => Math.max(m, t.sortOrder || 0), 0);
+  const theme = { id: String(Date.now()), name, icon, sortOrder: maxOrder + 1 };
+  state.themes.push(theme);
+  saveToCache();
+  renderThemeList();
+  document.getElementById('newThemeIcon').value = '';
+  document.getElementById('newThemeName').value = '';
+  showToast('テーマを追加しました');
+  gasRequest({ action: 'saveTheme', ...theme });
+}
+
+// ===== HELPERS =====
+function getThemeIcon(name) {
+  const t = state.themes.find(t => t.name === name);
+  return t ? (t.icon || '') + ' ' : '';
+}
+
+function formatDate(d) {
+  if (!d) return '';
+  const dt = new Date(d + 'T00:00:00');
+  const wd = ['日', '月', '火', '水', '木', '金', '土'][dt.getDay()];
+  return `${dt.getFullYear()}/${dt.getMonth() + 1}/${dt.getDate()}(${wd})`;
+}
+
+function formatDateShort(d) {
+  if (!d) return '';
+  const dt = new Date(d + 'T00:00:00');
+  return `${dt.getMonth() + 1}/${dt.getDate()}`;
+}
+
+function escHtml(s) {
+  if (!s) return '';
+  return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+function escAttr(s) {
+  if (!s) return '';
+  return String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
+function normalizeText(t) {
+  return (t || '').trim().toLowerCase().replace(/[。、！？\s]+/g, '');
+}
+
+// ===== TOAST =====
+let toastTimer;
+function showToast(msg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg; el.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove('show'), 2500);
+}
+
+// ===== OVERLAY CLOSE =====
+document.querySelectorAll('.overlay').forEach(ov => {
+  ov.addEventListener('click', e => { if (e.target === ov) ov.classList.remove('show'); });
+});
+
+// ===== SWIPE SUPPORT FOR KIDS =====
+(function() {
+  let startX = 0;
+  const content = document.getElementById('kidsContent');
+  content.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
+  content.addEventListener('touchend', e => {
+    const diff = startX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 50) kidsNav(diff > 0 ? 1 : -1);
+  }, { passive: true });
+})();
+
+init();
+</script>
+</body>
+</html>
