@@ -934,7 +934,7 @@ function editEntry() {
   closeEntryModal();
   showTab('record');
 
-  document.getElementById('entryDate').value = entry.date || '';
+  document.getElementById('entryDate').value = toDateStr(entry.date);
   document.getElementById('entryTitle').value = entry.title || '';
   document.getElementById('entryNote').value = entry.note || '';
   document.getElementById('editEntryId').textContent = entry.id;
@@ -1434,16 +1434,32 @@ function getThemeIcon(name) {
   return t ? (t.icon || '') + ' ' : '';
 }
 
-function formatDate(d) {
+function toDateStr(d) {
   if (!d) return '';
-  const dt = new Date(d + 'T00:00:00');
+  const m = String(d).match(/^(\d{4})-(\d{2})-(\d{2})/);
+  return m ? `${m[1]}-${m[2]}-${m[3]}` : '';
+}
+
+function parseDate(d) {
+  if (!d) return null;
+  const s = String(d);
+  // YYYY-MM-DD or ISO datetime
+  const m = s.match(/^(\d{4})-(\d{2})-(\d{2})/);
+  if (m) return new Date(parseInt(m[1]), parseInt(m[2]) - 1, parseInt(m[3]));
+  const dt = new Date(s);
+  return isNaN(dt) ? null : dt;
+}
+
+function formatDate(d) {
+  const dt = parseDate(d);
+  if (!dt) return '';
   const wd = ['日', '月', '火', '水', '木', '金', '土'][dt.getDay()];
   return `${dt.getFullYear()}/${dt.getMonth() + 1}/${dt.getDate()}(${wd})`;
 }
 
 function formatDateShort(d) {
-  if (!d) return '';
-  const dt = new Date(d + 'T00:00:00');
+  const dt = parseDate(d);
+  if (!dt) return '';
   return `${dt.getMonth() + 1}/${dt.getDate()}`;
 }
 
