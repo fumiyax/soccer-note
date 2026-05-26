@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>サッカー観察ノート</title>
+<title>サッカーノートメモ</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚽</text></svg>">
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap');
@@ -225,10 +225,20 @@
   }
   .item-form-text:focus { outline: none; border-color: var(--primary-light); }
   .item-form-meta { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
-  .tag-select {
-    padding: 4px 8px; border-radius: 6px; border: 1px solid var(--border);
+  .tag-toggle-group { display: flex; gap: 0; }
+  .tag-toggle {
+    padding: 4px 10px; border: 1px solid var(--border);
     font-size: 11px; font-weight: 600; font-family: 'Noto Sans JP', sans-serif;
-    background: var(--white);
+    background: var(--white); cursor: pointer; color: var(--text-sub);
+    transition: all 0.15s;
+  }
+  .tag-toggle:first-child { border-radius: 6px 0 0 6px; }
+  .tag-toggle:last-child { border-radius: 0 6px 6px 0; border-left: none; }
+  .tag-toggle.active-good {
+    background: var(--green); color: #fff; border-color: var(--green);
+  }
+  .tag-toggle.active-improve {
+    background: var(--orange); color: #fff; border-color: var(--orange);
   }
   .theme-toggle {
     padding: 3px 7px; border-radius: 6px;
@@ -488,8 +498,8 @@
   <div class="header-inner">
     <div class="logo">
       <span class="logo-icon">⚽</span>
-      <span class="logo-text">観察ノート</span>
-      <span class="logo-ver">v1.1</span>
+      <span class="logo-text">サッカーノートメモ</span>
+      <span class="logo-ver">v1.2</span>
     </div>
     <button class="btn-reload" onclick="loadData()">↻ 更新</button>
   </div>
@@ -598,7 +608,7 @@
       <div class="setting-item" style="border-bottom:none;">
         <div>
           <div class="setting-label">バージョン</div>
-          <div class="setting-desc">v1.1 / サッカー観察ノート</div>
+          <div class="setting-desc">v1.2 / サッカーノートメモ</div>
         </div>
       </div>
     </div>
@@ -687,7 +697,7 @@
 
 <script>
 // ===== CONFIG =====
-const VERSION = '1.1';
+const VERSION = '1.2';
 const CACHE_KEY = 'soccer-note-cache';
 const GAS_URL_KEY = 'soccer-note-gas-url';
 const DEFAULT_GAS_URL = 'https://script.google.com/macros/s/AKfycbwnM3ATKl_bZZEokfMJx1C_pUbMo5Pydr8JHDLki7JoFGsNzi_zd0_wtq5BEWMRdQWKvg/exec';
@@ -973,6 +983,7 @@ function addItemRow(data) {
   div.className = 'item-form-row';
   div.dataset.itemId = (data && data.id) || '';
 
+  const currentTag = (data && data.tag === 'good') ? 'good' : 'improve';
   const themes = state.themes.length ? state.themes : [];
   const selectedThemes = data ? (data.theme || '').split(',').filter(Boolean) : [];
   const themeBtns = themes.sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0)).map(t =>
@@ -982,10 +993,10 @@ function addItemRow(data) {
   div.innerHTML = `<div class="item-form-main">
     <textarea class="item-form-text" placeholder="観察メモ..." rows="1" oninput="autoResize(this)">${escHtml(data ? data.text || '' : '')}</textarea>
     <div class="item-form-meta">
-      <select class="tag-select" data-field="tag">
-        <option value="good" ${data && data.tag === 'good' ? 'selected' : ''}>良い</option>
-        <option value="improve" ${data && (data.tag === 'improve' || data.tag === 'drill') ? 'selected' : ''}>改善</option>
-      </select>
+      <div class="tag-toggle-group">
+        <button type="button" class="tag-toggle ${currentTag === 'good' ? 'active-good' : ''}" data-tag="good" onclick="toggleTag(this)">良い</button>
+        <button type="button" class="tag-toggle ${currentTag !== 'good' ? 'active-improve' : ''}" data-tag="improve" onclick="toggleTag(this)">改善</button>
+      </div>
       ${themeBtns}
     </div>
   </div>
@@ -999,6 +1010,14 @@ function addItemRow(data) {
 function autoResize(el) {
   el.style.height = 'auto';
   el.style.height = el.scrollHeight + 'px';
+}
+
+function toggleTag(btn) {
+  const group = btn.parentElement;
+  group.querySelectorAll('.tag-toggle').forEach(b => {
+    b.className = 'tag-toggle';
+  });
+  btn.classList.add(btn.dataset.tag === 'good' ? 'active-good' : 'active-improve');
 }
 
 function clearForm() {
@@ -1033,7 +1052,8 @@ async function saveEntry() {
   itemRows.forEach((row, i) => {
     const text = row.querySelector('.item-form-text').value.trim();
     if (!text) return;
-    const tag = row.querySelector('.tag-select').value;
+    const activeTag = row.querySelector('.tag-toggle.active-good');
+    const tag = activeTag ? 'good' : 'improve';
     const selectedThemes = Array.from(row.querySelectorAll('.theme-toggle.selected')).map(b => b.dataset.theme);
     items.push({
       id: row.dataset.itemId || String(Date.now() + i + 1),
