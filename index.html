@@ -376,6 +376,7 @@
   .setting-item {
     display: flex; align-items: center; justify-content: space-between;
     padding: 14px 0; border-bottom: 1px solid var(--border);
+    flex-wrap: wrap;
   }
   .setting-label { font-size: 14px; font-weight: 600; }
   .setting-desc { font-size: 12px; color: var(--text-sub); margin-top: 2px; }
@@ -1410,9 +1411,35 @@ function renderThemeList() {
   const container = document.getElementById('themeList');
   const sorted = [...state.themes].sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0));
   container.innerHTML = sorted.map(t =>
-    `<div class="setting-item"><span>${t.icon || ''} ${escHtml(t.name)}</span><span style="font-size:12px;color:var(--text-sub);">順序: ${t.sortOrder}</span></div>`
+    `<div class="setting-item" style="gap:8px;">
+      <input type="text" class="form-input" style="width:50px;padding:6px;text-align:center;" value="${escAttr(t.icon || '')}" data-id="${t.id}" data-field="icon" onchange="updateThemeField(this)">
+      <input type="text" class="form-input" style="flex:1;padding:6px;" value="${escAttr(t.name)}" data-id="${t.id}" data-field="name" onchange="updateThemeField(this)">
+      <button class="btn btn-ghost btn-sm" style="color:var(--red);flex-shrink:0;" onclick="deleteTheme('${t.id}')">削除</button>
+    </div>`
   ).join('');
 }
+
+function updateThemeField(el) {
+  const id = el.dataset.id;
+  const field = el.dataset.field;
+  const value = el.value.trim();
+  const theme = state.themes.find(t => String(t.id) === String(id));
+  if (!theme) return;
+  theme[field] = value;
+  saveToCache();
+  gasRequest({ action: 'saveTheme', ...theme });
+  showToast('更新しました');
+}
+
+async function deleteTheme(id) {
+  if (!confirm('このテーマを削除しますか？')) return;
+  state.themes = state.themes.filter(t => String(t.id) !== String(id));
+  saveToCache();
+  renderThemeList();
+  showToast('削除しました');
+  gasRequest({ action: 'deleteTheme', id });
+}
+
 async function addTheme() {
   const icon = document.getElementById('newThemeIcon').value.trim();
   const name = document.getElementById('newThemeName').value.trim();

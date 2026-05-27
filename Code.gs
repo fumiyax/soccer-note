@@ -145,6 +145,13 @@ function handleSaveTheme(params) {
   return { success: true, id };
 }
 
+function handleDeleteTheme(params) {
+  const sheet = getOrCreateSheet('themes', ['id', 'name', 'icon', 'sortOrder']);
+  const row = findRowById(sheet, params.id);
+  if (row > 0) sheet.deleteRow(row);
+  return { success: true };
+}
+
 function handleBulkSaveEntry(params) {
   const entry = params.entry || {};
   const items = params.items || [];
@@ -169,6 +176,7 @@ function doPost(e) {
       case 'saveItem':      result = handleSaveItem(params); break;
       case 'deleteItem':    result = handleDeleteItem(params); break;
       case 'saveTheme':     result = handleSaveTheme(params); break;
+      case 'deleteTheme':   result = handleDeleteTheme(params); break;
       case 'bulkSaveEntry': result = handleBulkSaveEntry(params); break;
       default:              result = { error: 'Unknown action: ' + action };
     }
