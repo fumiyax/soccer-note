@@ -6,234 +6,224 @@
 <title>サッカーノートメモ</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚽</text></svg>">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;700;900&display=swap');
 
   :root {
-    --primary:       #1e293b;
-    --primary-mid:   #334155;
-    --primary-light: #3b82f6;
-    --primary-pale:  #eff6ff;
-    --primary-border:#bfdbfe;
-    --white:         #ffffff;
-    --bg:            #f8fafc;
-    --text:          #0f172a;
-    --text-sub:      #64748b;
-    --border:        #e2e8f0;
-    --card:          #ffffff;
-    --green:         #16a34a;
-    --green-bg:      #f0fdf4;
-    --green-border:  #86efac;
-    --red:           #dc2626;
-    --red-bg:        #fef2f2;
-    --red-border:    #fca5a5;
-    --orange:        #ea580c;
-    --orange-bg:     #fff7ed;
-    --orange-border: #fed7aa;
-    --gold:          #d97706;
-    --gold-bg:       #fffbeb;
-    --purple:        #7c3aed;
-    --purple-bg:     #f5f3ff;
-    --shadow-sm:     0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
-    --shadow:        0 4px 6px rgba(0,0,0,0.07), 0 2px 4px rgba(0,0,0,0.04);
-    --radius:        12px;
-    --nav-height:    56px;
+    --bg: #ffffff;
+    --text: #000000;
+    --text-sub: #666666;
+    --text-light: #999999;
+    --border: #e0e0e0;
+    --green: #00874a;
+    --green-bg: #e8f5ef;
+    --orange: #d4380d;
+    --orange-bg: #fef0ec;
+    --nav-height: 56px;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
   body {
     font-family: 'Noto Sans JP', sans-serif;
-    background: var(--bg);
-    color: var(--text);
+    background: var(--bg); color: var(--text);
     min-height: 100vh;
     padding-bottom: calc(var(--nav-height) + 16px);
+    -webkit-font-smoothing: antialiased;
     -webkit-tap-highlight-color: transparent;
   }
 
   /* ===== HEADER ===== */
   header {
-    background: var(--primary);
-    position: sticky; top: 0; z-index: 100;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.12);
-  }
-  .header-inner {
+    background: #000; padding: 14px 20px;
     display: flex; align-items: center; justify-content: space-between;
-    padding: 10px 16px; max-width: 800px; margin: 0 auto;
+    position: sticky; top: 0; z-index: 100;
   }
-  .logo { display: flex; align-items: center; gap: 10px; }
-  .logo-icon { font-size: 24px; }
-  .logo-text { font-size: 15px; font-weight: 800; color: #fff; letter-spacing: 0.5px; }
-  .logo-ver {
-    background: rgba(59,130,246,0.5); color: #fff;
-    font-size: 10px; font-weight: 700;
-    padding: 1px 7px; border-radius: 4px; margin-left: 6px;
+  .logo {
+    font-size: 16px; font-weight: 900; color: #fff;
+    letter-spacing: 1.5px; text-transform: uppercase;
+  }
+  .logo small {
+    font-weight: 300; font-size: 10px; letter-spacing: 3px;
+    display: block; margin-top: 1px; opacity: 0.5;
+  }
+  .header-right { display: flex; align-items: center; gap: 10px; }
+  .ver {
+    font-size: 9px; color: rgba(255,255,255,0.4);
+    letter-spacing: 2px; font-weight: 300;
   }
   .btn-reload {
-    background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
-    color: rgba(255,255,255,0.8); padding: 6px 10px; border-radius: 8px;
-    font-size: 13px; cursor: pointer; font-family: 'Noto Sans JP', sans-serif;
-    transition: all 0.2s;
+    background: none; border: 1px solid rgba(255,255,255,0.2);
+    color: rgba(255,255,255,0.6); padding: 4px 10px; border-radius: 2px;
+    font-size: 11px; cursor: pointer; font-family: 'Noto Sans JP', sans-serif;
+    letter-spacing: 1px; transition: all 0.2s;
   }
-  .btn-reload:hover { background: rgba(255,255,255,0.2); color: #fff; }
-
-  /* ===== BOTTOM NAV ===== */
-  .bottom-nav {
-    position: fixed; bottom: 0; left: 0; right: 0;
-    height: var(--nav-height); z-index: 100;
-    background: var(--white);
-    border-top: 1px solid var(--border);
-    display: flex;
-    box-shadow: 0 -2px 10px rgba(0,0,0,0.06);
-  }
-  .nav-item {
-    flex: 1; display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    gap: 2px; cursor: pointer;
-    color: var(--text-sub); font-size: 10px; font-weight: 500;
-    transition: color 0.2s;
-    -webkit-tap-highlight-color: transparent;
-    border: none; background: none; font-family: 'Noto Sans JP', sans-serif;
-  }
-  .nav-item.active { color: var(--primary-light); }
-  .nav-icon { font-size: 20px; line-height: 1; }
+  .btn-reload:hover { color: #fff; border-color: rgba(255,255,255,0.5); }
 
   /* ===== MAIN ===== */
-  main { padding: 16px; max-width: 800px; margin: 0 auto; }
+  main { padding: 24px 20px; max-width: 720px; margin: 0 auto; }
   .section { display: none; }
   .section.active { display: block; }
 
-  /* ===== CARDS ===== */
-  .card {
-    background: var(--card); border-radius: var(--radius);
-    box-shadow: var(--shadow-sm); padding: 16px;
-    margin-bottom: 12px; border: 1px solid var(--border);
+  .section-title {
+    font-size: 11px; font-weight: 700; letter-spacing: 3px;
+    text-transform: uppercase; color: var(--text-light);
+    margin-bottom: 20px; padding-bottom: 8px; border-bottom: 2px solid #000;
   }
+
+  /* ===== SUB TABS ===== */
+  .sub-tabs {
+    display: flex; gap: 0; margin-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+  }
+  .sub-tab {
+    padding: 10px 0; margin-right: 24px;
+    font-size: 12px; font-weight: 700; letter-spacing: 1px;
+    text-transform: uppercase; cursor: pointer;
+    color: var(--text-light); border: none; background: none;
+    font-family: 'Noto Sans JP', sans-serif;
+    border-bottom: 2px solid transparent; transition: all 0.2s;
+    position: relative; top: 1px;
+  }
+  .sub-tab.active { color: #000; border-bottom-color: #000; }
+
+  /* ===== FILTER ROW ===== */
+  .filter-row {
+    display: flex; gap: 6px; margin-bottom: 20px;
+    overflow-x: auto; scrollbar-width: none;
+  }
+  .filter-row::-webkit-scrollbar { display: none; }
+  .filter-btn {
+    flex: 0 0 auto; padding: 5px 14px;
+    border: 1.5px solid var(--border); border-radius: 2px;
+    background: var(--bg); color: var(--text-sub);
+    font-size: 11px; font-weight: 700; cursor: pointer;
+    font-family: 'Noto Sans JP', sans-serif;
+    letter-spacing: 0.5px; transition: all 0.2s;
+  }
+  .filter-btn.active {
+    background: #000; color: #fff; border-color: #000;
+  }
+
+  /* ===== CARDS (timeline) ===== */
+  .card-entry { padding: 20px 0; border-bottom: 1px solid var(--border); cursor: pointer; }
+  .card-entry:last-child { border-bottom: none; }
   .card-header {
-    display: flex; align-items: center; justify-content: space-between;
-    margin-bottom: 8px;
+    display: flex; align-items: baseline; gap: 12px; margin-bottom: 10px;
   }
-  .card-date {
-    font-size: 12px; color: var(--text-sub); font-weight: 500;
-  }
+  .card-date { font-size: 13px; font-weight: 700; letter-spacing: 0.5px; }
   .card-type {
-    font-size: 11px; font-weight: 700; padding: 2px 8px;
-    border-radius: 6px; letter-spacing: 0.3px;
+    font-size: 10px; font-weight: 700; letter-spacing: 2px;
+    text-transform: uppercase; padding: 3px 10px;
+    border: 1.5px solid; border-radius: 2px;
   }
-  .type-game { background: var(--primary-pale); color: var(--primary-light); }
-  .type-practice { background: var(--green-bg); color: var(--green); }
-  .type-school { background: var(--orange-bg); color: var(--orange); }
-  .card-title {
-    font-size: 15px; font-weight: 700; margin-bottom: 8px;
-  }
+  .type-game { color: #000; border-color: #000; }
+  .type-practice { color: var(--green); border-color: var(--green); }
+  .type-school { color: var(--orange); border-color: var(--orange); }
+  .card-title { font-size: 20px; font-weight: 900; margin-bottom: 12px; letter-spacing: -0.3px; }
   .card-note {
     font-size: 13px; color: var(--text-sub); margin-bottom: 10px;
     white-space: pre-wrap; line-height: 1.6;
   }
 
-  /* ===== ITEM TAGS ===== */
+  /* ===== ITEM LIST ===== */
   .item-list { display: flex; flex-direction: column; gap: 6px; }
   .item-row {
-    display: flex; align-items: flex-start; gap: 8px;
-    font-size: 13px; line-height: 1.5;
-    padding: 6px 10px; border-radius: 8px;
+    display: flex; align-items: flex-start; gap: 10px;
+    font-size: 14px; padding: 10px 14px; border-radius: 4px; line-height: 1.6;
   }
-  .item-row.tag-good { background: var(--green-bg); }
-  .item-row.tag-improve, .item-row.tag-drill { background: var(--orange-bg); }
+  .item-row.tag-good { background: var(--green-bg); border-left: 3px solid var(--green); }
+  .item-row.tag-improve { background: var(--orange-bg); border-left: 3px solid var(--orange); }
   .item-tag {
-    flex-shrink: 0; font-size: 11px; font-weight: 700;
-    padding: 1px 6px; border-radius: 4px; margin-top: 1px;
+    flex-shrink: 0; font-size: 9px; font-weight: 700;
+    letter-spacing: 1.5px; text-transform: uppercase;
+    padding: 2px 6px; border-radius: 2px; color: #fff; margin-top: 3px;
   }
-  .tag-good .item-tag { background: var(--green); color: #fff; }
-  .tag-improve .item-tag, .tag-drill .item-tag { background: var(--orange); color: #fff; }
+  .tag-good .item-tag { background: var(--green); }
+  .tag-improve .item-tag { background: var(--orange); }
   .item-text { flex: 1; }
-  .item-themes {
-    display: flex; flex-wrap: wrap; gap: 3px; margin-top: 3px;
-  }
+
+  /* ===== THEME CHIPS: inline after text ===== */
   .theme-chip {
-    font-size: 10px; padding: 1px 5px; border-radius: 4px;
-    background: rgba(0,0,0,0.05); color: var(--text-sub);
+    font-size: 9px; padding: 1px 6px; border-radius: 2px;
+    font-weight: 700; letter-spacing: 0.3px;
+    display: inline-block; margin-left: 4px; vertical-align: middle;
+    line-height: 1.4;
   }
+  .theme-pass { background: #d1e4f6; color: #1a56a0; }
+  .theme-shoot { background: #f5d0d0; color: #a01a1a; }
+  .theme-defense { background: #d5d0f5; color: #3a1aa0; }
+  .theme-position { background: #c8f0e0; color: #0a6b42; }
+  .theme-dribble { background: #f5e6c8; color: #8a5a0a; }
+  .theme-trap { background: #e8d5f5; color: #6b1aa0; }
+  .theme-mental { background: #f7d0dc; color: #8a1a42; }
+  .theme-throwin { background: #c8f5d5; color: #1a6a28; }
+  .theme-switch { background: #f5dcc8; color: #8a3a0a; }
+  .theme-physical { background: #c8e0f5; color: #0a4a8a; }
+  .theme-other { background: #e8e8e8; color: #555555; }
 
-  /* ===== TYPE FILTER ===== */
-  .filter-row {
-    display: flex; gap: 6px; margin-bottom: 16px;
-    overflow-x: auto; scrollbar-width: none;
+  /* ===== FORM CARD ===== */
+  .card {
+    background: #fff; padding: 20px;
+    border: 1px solid var(--border); margin-bottom: 12px;
   }
-  .filter-row::-webkit-scrollbar { display: none; }
-  .filter-btn {
-    flex: 0 0 auto; padding: 6px 14px;
-    border-radius: 20px; border: 1px solid var(--border);
-    background: var(--white); color: var(--text-sub);
-    font-size: 12px; font-weight: 600; cursor: pointer;
-    font-family: 'Noto Sans JP', sans-serif;
-    transition: all 0.2s;
-  }
-  .filter-btn.active {
-    background: var(--primary); color: #fff; border-color: var(--primary);
-  }
-
-  /* ===== FORM ===== */
   .form-group { margin-bottom: 16px; }
   .form-label {
-    display: block; font-size: 12px; font-weight: 700;
-    color: var(--text-sub); margin-bottom: 6px; letter-spacing: 0.3px;
+    display: block; font-size: 10px; font-weight: 700;
+    color: var(--text-light); margin-bottom: 6px;
+    letter-spacing: 2px; text-transform: uppercase;
   }
   .form-input, .form-select, .form-textarea {
     width: 100%; padding: 10px 12px;
-    border: 1px solid var(--border); border-radius: 8px;
+    border: 1px solid var(--border); border-radius: 2px;
     font-size: 14px; font-family: 'Noto Sans JP', sans-serif;
-    background: var(--white); color: var(--text);
-    transition: border-color 0.2s;
+    background: #fff; color: var(--text); transition: border-color 0.2s;
   }
   .form-input:focus, .form-select:focus, .form-textarea:focus {
-    outline: none; border-color: var(--primary-light);
-    box-shadow: 0 0 0 3px rgba(59,130,246,0.1);
+    outline: none; border-color: #000;
   }
   .form-textarea { resize: vertical; min-height: 80px; line-height: 1.6; }
 
   .form-row { display: flex; gap: 12px; }
   .form-row .form-group { flex: 1; }
 
-  .type-selector {
-    display: flex; gap: 8px;
-  }
+  .type-selector { display: flex; gap: 8px; }
   .type-option {
     flex: 1; padding: 10px 8px; text-align: center;
-    border: 2px solid var(--border); border-radius: 10px;
-    cursor: pointer; font-size: 12px; font-weight: 600;
-    transition: all 0.2s; background: var(--white);
+    border: 2px solid var(--border); border-radius: 2px;
+    cursor: pointer; font-size: 12px; font-weight: 700;
+    transition: all 0.2s; background: #fff;
     font-family: 'Noto Sans JP', sans-serif;
+    letter-spacing: 0.5px;
   }
-  .type-option.selected { border-color: var(--primary-light); background: var(--primary-pale); }
-  .type-option-icon { font-size: 20px; display: block; margin-bottom: 4px; }
+  .type-option.selected { border-color: #000; background: #000; color: #fff; }
+  .type-option-label { display: block; }
 
   /* ===== ITEM FORM ===== */
   .items-form { margin-top: 8px; }
   .item-form-row {
     display: flex; gap: 8px; align-items: flex-start;
     margin-bottom: 8px; padding: 10px;
-    background: var(--bg); border-radius: 10px;
-    border: 1px solid var(--border);
+    background: #fafafa; border: 1px solid var(--border);
   }
   .item-form-main { flex: 1; display: flex; flex-direction: column; gap: 6px; }
   .item-form-text {
     width: 100%; padding: 8px 10px;
-    border: 1px solid var(--border); border-radius: 6px;
+    border: 1px solid var(--border); border-radius: 2px;
     font-size: 13px; font-family: 'Noto Sans JP', sans-serif;
-    background: var(--white); resize: none;
+    background: #fff; resize: none;
     min-height: 38px; line-height: 1.5;
   }
-  .item-form-text:focus { outline: none; border-color: var(--primary-light); }
+  .item-form-text:focus { outline: none; border-color: #000; }
   .item-form-meta { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
   .tag-toggle-group { display: flex; gap: 0; }
   .tag-toggle {
     padding: 4px 10px; border: 1px solid var(--border);
-    font-size: 11px; font-weight: 600; font-family: 'Noto Sans JP', sans-serif;
-    background: var(--white); cursor: pointer; color: var(--text-sub);
-    transition: all 0.15s;
+    font-size: 11px; font-weight: 700; font-family: 'Noto Sans JP', sans-serif;
+    background: #fff; cursor: pointer; color: var(--text-sub);
+    transition: all 0.15s; letter-spacing: 0.5px;
   }
-  .tag-toggle:first-child { border-radius: 6px 0 0 6px; }
-  .tag-toggle:last-child { border-radius: 0 6px 6px 0; border-left: none; }
+  .tag-toggle:first-child { border-radius: 2px 0 0 2px; }
+  .tag-toggle:last-child { border-radius: 0 2px 2px 0; border-left: none; }
   .tag-toggle.active-good {
     background: var(--green); color: #fff; border-color: var(--green);
   }
@@ -241,45 +231,44 @@
     background: var(--orange); color: #fff; border-color: var(--orange);
   }
   .theme-toggle {
-    padding: 3px 7px; border-radius: 6px;
-    border: 1px solid var(--border); background: var(--white);
+    padding: 3px 7px; border-radius: 2px;
+    border: 1px solid var(--border); background: #fff;
     font-size: 11px; cursor: pointer;
     font-family: 'Noto Sans JP', sans-serif;
     transition: all 0.15s;
   }
   .theme-toggle.selected {
-    background: var(--primary-pale); border-color: var(--primary-light);
-    color: var(--primary-light); font-weight: 600;
+    background: #000; border-color: #000;
+    color: #fff; font-weight: 700;
   }
   .btn-remove-item {
-    width: 28px; height: 28px; border-radius: 50%;
-    border: none; background: var(--red-bg); color: var(--red);
+    width: 28px; height: 28px; border-radius: 2px;
+    border: none; background: var(--orange-bg); color: var(--orange);
     font-size: 16px; cursor: pointer; flex-shrink: 0;
     display: flex; align-items: center; justify-content: center;
     margin-top: 6px;
   }
-
   .btn-add-item {
     width: 100%; padding: 10px;
-    border: 2px dashed var(--border); border-radius: 10px;
+    border: 2px dashed var(--border);
     background: transparent; color: var(--text-sub);
-    font-size: 13px; font-weight: 600; cursor: pointer;
+    font-size: 13px; font-weight: 700; cursor: pointer;
     font-family: 'Noto Sans JP', sans-serif;
-    transition: all 0.2s;
+    letter-spacing: 1px; transition: all 0.2s;
   }
-  .btn-add-item:hover { border-color: var(--primary-light); color: var(--primary-light); }
+  .btn-add-item:hover { border-color: #000; color: #000; }
 
   /* ===== BUTTONS ===== */
   .btn {
-    padding: 12px 24px; border-radius: 10px;
+    padding: 12px 24px; border-radius: 2px;
     font-size: 14px; font-weight: 700; cursor: pointer;
     border: none; font-family: 'Noto Sans JP', sans-serif;
-    transition: all 0.2s; letter-spacing: 0.3px;
+    transition: all 0.2s; letter-spacing: 0.5px;
   }
-  .btn-primary { background: var(--primary-light); color: #fff; width: 100%; }
-  .btn-primary:hover { background: #2563eb; }
-  .btn-primary:disabled { background: #94a3b8; cursor: not-allowed; }
-  .btn-danger { background: var(--red); color: #fff; }
+  .btn-primary { background: #000; color: #fff; width: 100%; }
+  .btn-primary:hover { background: #333; }
+  .btn-primary:disabled { background: #ccc; cursor: not-allowed; }
+  .btn-danger { background: var(--orange); color: #fff; }
   .btn-ghost {
     background: transparent; color: var(--text-sub);
     border: 1px solid var(--border); padding: 8px 16px;
@@ -290,21 +279,18 @@
 
   /* ===== EMPTY STATE ===== */
   .empty-state {
-    text-align: center; padding: 48px 16px;
-    color: var(--text-sub);
+    text-align: center; padding: 48px 16px; color: var(--text-sub);
   }
-  .empty-icon { font-size: 48px; margin-bottom: 12px; }
   .empty-state p { font-size: 14px; line-height: 1.6; }
 
   /* ===== TOAST ===== */
   #toast {
     position: fixed; bottom: calc(var(--nav-height) + 16px);
     left: 50%; transform: translateX(-50%) translateY(20px);
-    background: var(--primary); color: #fff;
-    padding: 10px 20px; border-radius: 10px;
-    font-size: 13px; font-weight: 600;
-    box-shadow: var(--shadow); z-index: 200;
-    opacity: 0; transition: all 0.3s; pointer-events: none;
+    background: #000; color: #fff;
+    padding: 10px 20px; border-radius: 2px;
+    font-size: 13px; font-weight: 700; letter-spacing: 0.5px;
+    z-index: 200; opacity: 0; transition: all 0.3s; pointer-events: none;
   }
   #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
@@ -316,58 +302,53 @@
   }
   .overlay.show { display: flex; }
   .modal {
-    background: var(--white); border-radius: 16px 16px 0 0;
-    width: 100%; max-width: 800px; max-height: 85vh;
-    overflow-y: auto; padding: 24px 16px;
+    background: #fff; width: 100%; max-width: 720px; max-height: 85vh;
+    overflow-y: auto; padding: 24px 20px;
     animation: slideUp 0.25s ease-out;
   }
   @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
   .modal-title {
-    font-size: 16px; font-weight: 800; margin-bottom: 16px;
-    text-align: center;
-  }
-  .modal-close {
-    position: absolute; top: 16px; right: 16px;
-    width: 32px; height: 32px; border-radius: 50%;
-    border: none; background: var(--bg); cursor: pointer;
-    font-size: 18px; color: var(--text-sub);
-    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; font-weight: 900; margin-bottom: 16px;
+    text-align: center; letter-spacing: 0.5px;
   }
 
-  /* ===== REVIEW TAB ===== */
-  .sub-tabs {
-    display: flex; gap: 0; margin-bottom: 16px;
-    background: var(--bg); border-radius: 10px; padding: 3px;
+  /* ===== REVIEW: THEME BAR ===== */
+  .theme-bar-container { margin-bottom: 8px; }
+  .theme-bar-row {
+    display: flex; align-items: center; gap: 8px; margin-bottom: 6px;
   }
-  .sub-tab {
-    flex: 1; padding: 8px 4px; text-align: center;
-    font-size: 11px; font-weight: 600; cursor: pointer;
-    border-radius: 8px; color: var(--text-sub);
-    border: none; background: none;
-    font-family: 'Noto Sans JP', sans-serif;
-    transition: all 0.2s;
+  .theme-bar-label { font-size: 12px; width: 80px; flex-shrink: 0; text-align: right; font-weight: 700; }
+  .theme-bar-track {
+    flex: 1; height: 20px; background: #f5f5f5;
+    overflow: hidden; display: flex;
   }
-  .sub-tab.active { background: var(--white); color: var(--text); box-shadow: var(--shadow-sm); }
+  .theme-bar-good { background: var(--green); height: 100%; }
+  .theme-bar-improve { background: var(--orange); height: 100%; }
+  .theme-bar-count { font-size: 11px; color: var(--text-sub); width: 30px; text-align: right; }
 
+  /* ===== REVIEW: THEME SECTION ===== */
   .theme-section { margin-bottom: 20px; }
   .theme-header {
     display: flex; align-items: center; gap: 8px;
-    font-size: 14px; font-weight: 700; margin-bottom: 10px;
+    font-size: 14px; font-weight: 900; margin-bottom: 10px;
     padding-bottom: 6px; border-bottom: 2px solid var(--border);
   }
-  .theme-icon { font-size: 18px; }
+  .theme-header-chip {
+    font-size: 10px; padding: 2px 8px; border-radius: 2px;
+    font-weight: 700;
+  }
   .theme-count {
-    margin-left: auto; font-size: 12px; color: var(--text-sub);
-    font-weight: 500;
+    margin-left: auto; font-size: 12px; color: var(--text-sub); font-weight: 500;
   }
 
+  /* ===== REVIEW: REPEAT ===== */
   .repeat-card {
-    background: var(--gold-bg); border: 1px solid var(--orange-border);
-    border-radius: var(--radius); padding: 12px; margin-bottom: 10px;
+    background: var(--orange-bg); border-left: 3px solid var(--orange);
+    padding: 12px 14px; margin-bottom: 10px;
   }
   .repeat-count {
-    font-size: 12px; font-weight: 700; color: var(--orange);
-    margin-bottom: 4px;
+    font-size: 10px; font-weight: 700; color: var(--orange);
+    letter-spacing: 1px; text-transform: uppercase; margin-bottom: 4px;
   }
   .repeat-text { font-size: 13px; line-height: 1.5; }
   .repeat-dates { font-size: 11px; color: var(--text-sub); margin-top: 4px; }
@@ -378,14 +359,13 @@
     padding: 14px 0; border-bottom: 1px solid var(--border);
     flex-wrap: wrap;
   }
-  .setting-label { font-size: 14px; font-weight: 600; }
+  .setting-label { font-size: 14px; font-weight: 700; }
   .setting-desc { font-size: 12px; color: var(--text-sub); margin-top: 2px; }
 
-  /* ===== KIDS REVIEW MODE ===== */
+  /* ===== KIDS REVIEW OVERLAY ===== */
   .kids-overlay {
     position: fixed; inset: 0; z-index: 200;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    display: none; flex-direction: column;
+    background: #000; display: none; flex-direction: column;
     animation: fadeIn 0.3s;
   }
   .kids-overlay.show { display: flex; }
@@ -393,15 +373,15 @@
 
   .kids-header {
     display: flex; align-items: center; justify-content: space-between;
-    padding: 12px 16px; color: #fff;
+    padding: 14px 20px; color: #fff;
   }
   .kids-close {
-    background: rgba(255,255,255,0.2); border: none;
-    color: #fff; padding: 8px 14px; border-radius: 10px;
-    font-size: 13px; font-weight: 700; cursor: pointer;
-    font-family: 'Noto Sans JP', sans-serif;
+    background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3);
+    color: #fff; padding: 6px 14px; border-radius: 2px;
+    font-size: 12px; font-weight: 700; cursor: pointer;
+    font-family: 'Noto Sans JP', sans-serif; letter-spacing: 1px;
   }
-  .kids-title { font-size: 14px; font-weight: 700; }
+  .kids-title { font-size: 14px; font-weight: 900; letter-spacing: 1px; text-transform: uppercase; }
   .kids-nav-dots {
     display: flex; gap: 6px; justify-content: center; padding: 8px;
   }
@@ -409,14 +389,11 @@
     width: 8px; height: 8px; border-radius: 50%;
     background: rgba(255,255,255,0.3); transition: all 0.3s;
   }
-  .kids-dot.active { background: #fff; width: 20px; border-radius: 4px; }
+  .kids-dot.active { background: #fff; width: 20px; border-radius: 2px; }
 
-  .kids-content {
-    flex: 1; overflow: hidden; position: relative;
-  }
+  .kids-content { flex: 1; overflow: hidden; position: relative; }
   .kids-card-container {
-    display: flex; transition: transform 0.3s ease;
-    height: 100%;
+    display: flex; transition: transform 0.3s ease; height: 100%;
   }
   .kids-card {
     flex: 0 0 100%; padding: 16px;
@@ -424,159 +401,142 @@
     justify-content: center; overflow-y: auto;
   }
   .kids-card-inner {
-    background: rgba(255,255,255,0.95); border-radius: 20px;
-    padding: 24px 20px; width: 100%; max-width: 400px;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.15);
-    text-align: center;
+    background: #fff; padding: 24px 20px;
+    width: 100%; max-width: 400px; text-align: center;
   }
-  .kids-card-icon { font-size: 48px; margin-bottom: 12px; }
   .kids-card-title {
-    font-size: 18px; font-weight: 800; margin-bottom: 16px;
-    color: var(--primary);
+    font-size: 16px; font-weight: 900; margin-bottom: 16px;
+    letter-spacing: 1px; text-transform: uppercase;
   }
   .kids-card-body { text-align: left; }
   .kids-item {
-    padding: 10px 12px; margin-bottom: 8px;
-    border-radius: 10px; font-size: 14px; line-height: 1.6;
+    padding: 10px 14px; margin-bottom: 8px;
+    font-size: 14px; line-height: 1.6; border-left: 3px solid;
   }
-  .kids-item-good { background: var(--green-bg); }
-  .kids-item-improve { background: var(--orange-bg); }
+  .kids-item-good { background: var(--green-bg); border-color: var(--green); }
+  .kids-item-improve { background: var(--orange-bg); border-color: var(--orange); }
+  .kids-item-challenge { background: #f5f5f5; border-color: #000; }
   .kids-stat-grid {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
-    margin-top: 12px;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 12px;
   }
   .kids-stat {
-    background: var(--bg); border-radius: 12px; padding: 16px;
-    text-align: center;
+    background: #f5f5f5; padding: 16px; text-align: center;
   }
-  .kids-stat-num { font-size: 32px; font-weight: 900; color: var(--primary-light); }
-  .kids-stat-label { font-size: 11px; color: var(--text-sub); font-weight: 600; margin-top: 4px; }
+  .kids-stat-num { font-size: 32px; font-weight: 900; }
+  .kids-stat-label { font-size: 10px; color: var(--text-sub); font-weight: 700; margin-top: 4px; letter-spacing: 1px; text-transform: uppercase; }
 
   .kids-nav-arrows {
-    display: flex; justify-content: space-between;
-    padding: 12px 16px; gap: 12px;
+    display: flex; justify-content: space-between; padding: 12px 16px; gap: 12px;
   }
   .kids-arrow {
-    flex: 1; padding: 14px; border: none; border-radius: 12px;
-    background: rgba(255,255,255,0.2); color: #fff;
-    font-size: 14px; font-weight: 700; cursor: pointer;
-    font-family: 'Noto Sans JP', sans-serif;
+    flex: 1; padding: 14px; border: none; border-radius: 2px;
+    background: rgba(255,255,255,0.15); color: #fff;
+    font-size: 13px; font-weight: 700; cursor: pointer;
+    font-family: 'Noto Sans JP', sans-serif; letter-spacing: 1px;
   }
   .kids-arrow:disabled { opacity: 0.3; cursor: not-allowed; }
 
-  /* ===== CARD ACTIONS ===== */
-  .card-actions {
-    display: flex; gap: 8px; margin-top: 10px;
-    padding-top: 10px; border-top: 1px solid var(--border);
+  /* ===== BOTTOM NAV ===== */
+  .bottom-nav {
+    position: fixed; bottom: 0; left: 0; right: 0;
+    height: var(--nav-height); z-index: 100;
+    background: #fff; border-top: 1px solid var(--border);
+    display: flex;
   }
-  .card-action {
-    background: none; border: none; color: var(--text-sub);
-    font-size: 12px; cursor: pointer; padding: 4px 8px;
-    font-family: 'Noto Sans JP', sans-serif;
-    display: flex; align-items: center; gap: 4px;
+  .nav-item {
+    flex: 1; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 3px;
+    cursor: pointer; font-size: 9px; font-weight: 700;
+    letter-spacing: 1px; text-transform: uppercase;
+    color: var(--text-light);
+    border: none; background: none; font-family: 'Noto Sans JP', sans-serif;
+    -webkit-tap-highlight-color: transparent;
   }
-  .card-action:hover { color: var(--primary-light); }
-
-  /* ===== THEME BAR (review) ===== */
-  .theme-bar-container { margin-bottom: 8px; }
-  .theme-bar-row {
-    display: flex; align-items: center; gap: 8px; margin-bottom: 6px;
+  .nav-item.active { color: #000; }
+  .nav-dot {
+    width: 5px; height: 5px; border-radius: 50%; background: transparent;
   }
-  .theme-bar-label { font-size: 12px; width: 80px; flex-shrink: 0; text-align: right; }
-  .theme-bar-track {
-    flex: 1; height: 20px; background: var(--bg);
-    border-radius: 4px; overflow: hidden; display: flex;
-  }
-  .theme-bar-good { background: var(--green); height: 100%; }
-  .theme-bar-improve { background: var(--orange); height: 100%; }
-  .theme-bar-count { font-size: 11px; color: var(--text-sub); width: 30px; text-align: right; }
+  .nav-item.active .nav-dot { background: #000; }
 </style>
 </head>
 <body>
 
 <!-- ===== HEADER ===== -->
 <header>
-  <div class="header-inner">
-    <div class="logo">
-      <span class="logo-icon">⚽</span>
-      <span class="logo-text">サッカーノートメモ</span>
-      <span class="logo-ver">v1.4</span>
-    </div>
-    <button class="btn-reload" onclick="loadData()">↻ 更新</button>
+  <div class="logo">SOCCER NOTE<small>observation memo</small></div>
+  <div class="header-right">
+    <button class="btn-reload" onclick="loadData()">RELOAD</button>
+    <span class="ver">V1.5</span>
   </div>
 </header>
 
 <!-- ===== MAIN ===== -->
 <main>
-  <!-- TIMELINE -->
-  <div id="section-timeline" class="section active">
-    <div class="filter-row" id="typeFilter"></div>
-    <div id="timelineList"></div>
+  <!-- TOP -->
+  <div id="section-top" class="section active">
+    <div class="section-title">Top</div>
+    <div class="sub-tabs">
+      <button class="sub-tab active" data-subtab="timeline" onclick="showSubTab('timeline')">時系列</button>
+      <button class="sub-tab" data-subtab="theme" onclick="showSubTab('theme')">テーマ別</button>
+      <button class="sub-tab" data-subtab="repeat" onclick="showSubTab('repeat')">振り返り</button>
+    </div>
+    <!-- 時系列 sub-tab -->
+    <div id="subtab-timeline" class="subtab-content">
+      <div class="filter-row" id="typeFilter"></div>
+      <div id="timelineList"></div>
+    </div>
+    <!-- テーマ別 sub-tab -->
+    <div id="subtab-theme" class="subtab-content" style="display:none;"></div>
+    <!-- 振り返り sub-tab -->
+    <div id="subtab-repeat" class="subtab-content" style="display:none;"></div>
   </div>
 
   <!-- RECORD -->
   <div id="section-record" class="section">
+    <div class="section-title">Record</div>
     <div class="card">
       <div class="form-group">
-        <label class="form-label">日付</label>
+        <label class="form-label">Date</label>
         <input type="date" id="entryDate" class="form-input">
       </div>
       <div class="form-group">
-        <label class="form-label">タイトル</label>
+        <label class="form-label">Title</label>
         <input type="text" id="entryTitle" class="form-input" placeholder="対戦相手・練習内容など">
       </div>
       <div class="form-group">
-        <label class="form-label">種別</label>
+        <label class="form-label">Type</label>
         <div class="type-selector">
           <div class="type-option selected" data-type="game" onclick="selectType('game')">
-            <span class="type-option-icon">🏟️</span>試合
+            <span class="type-option-label">Game</span>
           </div>
           <div class="type-option" data-type="practice" onclick="selectType('practice')">
-            <span class="type-option-icon">🏃</span>練習
+            <span class="type-option-label">Practice</span>
           </div>
           <div class="type-option" data-type="school" onclick="selectType('school')">
-            <span class="type-option-icon">🏫</span>スクール
+            <span class="type-option-label">School</span>
           </div>
         </div>
       </div>
       <div class="form-group">
-        <label class="form-label">メモ（自由記述）</label>
+        <label class="form-label">Note</label>
         <textarea id="entryNote" class="form-textarea" placeholder="全体的な感想など..." rows="3"></textarea>
       </div>
       <div class="form-group">
-        <label class="form-label">観察アイテム</label>
+        <label class="form-label">Items</label>
         <div class="items-form" id="itemsForm"></div>
-        <button class="btn-add-item" onclick="addItemRow()">＋ アイテム追加</button>
+        <button class="btn-add-item" onclick="addItemRow()">+ ADD ITEM</button>
       </div>
       <div class="btn-row">
-        <button class="btn btn-ghost" onclick="clearForm()">クリア</button>
-        <button class="btn btn-primary" onclick="saveEntry()">保存</button>
+        <button class="btn btn-ghost" onclick="clearForm()">CLEAR</button>
+        <button class="btn btn-primary" onclick="saveEntry()">SAVE</button>
       </div>
       <div id="editEntryId" style="display:none;"></div>
     </div>
   </div>
 
-  <!-- REVIEW -->
-  <div id="section-review" class="section">
-    <div class="sub-tabs">
-      <button class="sub-tab active" onclick="showSubTab('theme')">テーマ別</button>
-      <button class="sub-tab" onclick="showSubTab('repeat')">繰り返し</button>
-      <button class="sub-tab" onclick="showSubTab('kids')">子供と振り返り</button>
-    </div>
-    <div id="subtab-theme" class="subtab-content"></div>
-    <div id="subtab-repeat" class="subtab-content" style="display:none;"></div>
-    <div id="subtab-kids" class="subtab-content" style="display:none;">
-      <div class="card" style="text-align:center;">
-        <div style="font-size:48px;margin-bottom:12px;">🌟</div>
-        <p style="font-size:14px;font-weight:700;margin-bottom:12px;">子供と一緒に振り返ろう</p>
-        <p style="font-size:13px;color:var(--text-sub);margin-bottom:16px;">最近のハイライト、成長ポイント、<br>次のチャレンジをカード形式で表示します</p>
-        <button class="btn btn-primary" onclick="openKidsReview()">振り返りを始める</button>
-      </div>
-    </div>
-  </div>
-
   <!-- SETTINGS -->
   <div id="section-settings" class="section">
+    <div class="section-title">Settings</div>
     <div class="card">
       <div class="setting-item">
         <div>
@@ -601,6 +561,13 @@
       </div>
       <div class="setting-item">
         <div>
+          <div class="setting-label">子供と振り返り</div>
+          <div class="setting-desc">カード形式で一緒に振り返る</div>
+        </div>
+        <button class="btn btn-ghost btn-sm" onclick="openKidsReview()">開始</button>
+      </div>
+      <div class="setting-item">
+        <div>
           <div class="setting-label">ローカルキャッシュクリア</div>
           <div class="setting-desc">保存されたキャッシュを削除</div>
         </div>
@@ -609,7 +576,7 @@
       <div class="setting-item" style="border-bottom:none;">
         <div>
           <div class="setting-label">バージョン</div>
-          <div class="setting-desc">v1.4 / サッカーノートメモ</div>
+          <div class="setting-desc">v1.5 / Soccer Note Memo</div>
         </div>
       </div>
     </div>
@@ -618,17 +585,14 @@
 
 <!-- ===== BOTTOM NAV ===== -->
 <div class="bottom-nav">
-  <button class="nav-item active" id="nav-timeline" onclick="showTab('timeline')">
-    <span class="nav-icon">📋</span>タイムライン
+  <button class="nav-item active" id="nav-top" onclick="showTab('top')">
+    <div class="nav-dot"></div>Top
   </button>
   <button class="nav-item" id="nav-record" onclick="showTab('record')">
-    <span class="nav-icon">✏️</span>記録
-  </button>
-  <button class="nav-item" id="nav-review" onclick="showTab('review')">
-    <span class="nav-icon">📊</span>振り返り
+    <div class="nav-dot"></div>Record
   </button>
   <button class="nav-item" id="nav-settings" onclick="showTab('settings')">
-    <span class="nav-icon">⚙️</span>設定
+    <div class="nav-dot"></div>Settings
   </button>
 </div>
 
@@ -671,7 +635,6 @@
     <div class="form-group" style="margin-top:16px;">
       <label class="form-label">新規テーマ追加</label>
       <div style="display:flex;gap:8px;">
-        <input type="text" id="newThemeIcon" class="form-input" placeholder="絵文字" style="width:60px;">
         <input type="text" id="newThemeName" class="form-input" placeholder="テーマ名" style="flex:1;">
         <button class="btn btn-primary btn-sm" onclick="addTheme()">追加</button>
       </div>
@@ -683,33 +646,46 @@
 <!-- ===== KIDS REVIEW OVERLAY ===== -->
 <div class="kids-overlay" id="kidsOverlay">
   <div class="kids-header">
-    <span class="kids-title">🌟 振り返りタイム</span>
-    <button class="kids-close" onclick="closeKidsReview()">✕ とじる</button>
+    <span class="kids-title">Review Time</span>
+    <button class="kids-close" onclick="closeKidsReview()">CLOSE</button>
   </div>
   <div class="kids-nav-dots" id="kidsDots"></div>
   <div class="kids-content" id="kidsContent">
     <div class="kids-card-container" id="kidsCards"></div>
   </div>
   <div class="kids-nav-arrows">
-    <button class="kids-arrow" id="kidsPrev" onclick="kidsNav(-1)">← もどる</button>
-    <button class="kids-arrow" id="kidsNext" onclick="kidsNav(1)">つぎへ →</button>
+    <button class="kids-arrow" id="kidsPrev" onclick="kidsNav(-1)">PREV</button>
+    <button class="kids-arrow" id="kidsNext" onclick="kidsNav(1)">NEXT</button>
   </div>
 </div>
 
 <script>
 // ===== CONFIG =====
-const VERSION = '1.4';
+const VERSION = '1.5';
 const CACHE_KEY = 'soccer-note-cache';
 const GAS_URL_KEY = 'soccer-note-gas-url';
 const DEFAULT_GAS_URL = 'https://script.google.com/macros/s/AKfycbyDVM3XxUXACn0Lk2WabnLTggkt_ZUITgian7Dk3VLyQfDjyaJMLas06ogSmHSAuAkiaA/exec';
-const TYPE_LABELS = { game: '試合', practice: '練習', school: 'スクール' };
+const TYPE_LABELS = { game: 'Game', practice: 'Practice', school: 'School' };
 const TYPE_CLASSES = { game: 'type-game', practice: 'type-practice', school: 'type-school' };
 const TAG_LABELS = { good: '良い', improve: '改善' };
+
+// Theme name → CSS class mapping
+const THEME_CSS = {
+  'パス': 'theme-pass', 'シュート': 'theme-shoot', '守備': 'theme-defense',
+  'ポジショニング': 'theme-position', 'ドリブル': 'theme-dribble',
+  'トラップ': 'theme-trap', 'メンタル': 'theme-mental',
+  'スローイン': 'theme-throwin', '切り替え': 'theme-switch',
+  'フィジカル': 'theme-physical'
+};
+
+function getThemeClass(name) {
+  return THEME_CSS[name] || 'theme-other';
+}
 
 // ===== STATE =====
 let state = { entries: [], items: [], themes: [] };
 let currentFilter = 'all';
-let currentSubTab = 'theme';
+let currentSubTab = 'timeline';
 let editingEntryId = null;
 let kidsPage = 0;
 let kidsPages = [];
@@ -812,17 +788,22 @@ function showTab(name) {
   document.querySelectorAll('.nav-item').forEach(t => t.classList.remove('active'));
   document.getElementById('section-' + name).classList.add('active');
   document.getElementById('nav-' + name).classList.add('active');
-  if (name === 'review') renderReview();
+  if (name === 'top') renderSubTabContent();
 }
 
 function showSubTab(name) {
   currentSubTab = name;
   document.querySelectorAll('.sub-tab').forEach(t => t.classList.remove('active'));
   document.querySelectorAll('.subtab-content').forEach(c => c.style.display = 'none');
-  event.target.classList.add('active');
+  document.querySelector(`.sub-tab[data-subtab="${name}"]`).classList.add('active');
   document.getElementById('subtab-' + name).style.display = 'block';
-  if (name === 'theme') renderThemeReview();
-  if (name === 'repeat') renderRepeatDetection();
+  renderSubTabContent();
+}
+
+function renderSubTabContent() {
+  if (currentSubTab === 'timeline') renderTimeline();
+  else if (currentSubTab === 'theme') renderThemeReview();
+  else if (currentSubTab === 'repeat') renderRepeatDetection();
 }
 
 // ===== RENDER ALL =====
@@ -837,13 +818,13 @@ function renderTypeFilter() {
   state.entries.forEach(e => { counts[e.type] = (counts[e.type] || 0) + 1; });
   const container = document.getElementById('typeFilter');
   const filters = [
-    { key: 'all', label: 'すべて' },
-    { key: 'game', label: '試合' },
-    { key: 'practice', label: '練習' },
-    { key: 'school', label: 'スクール' },
+    { key: 'all', label: 'ALL' },
+    { key: 'game', label: 'GAME' },
+    { key: 'practice', label: 'PRACTICE' },
+    { key: 'school', label: 'SCHOOL' },
   ];
   container.innerHTML = filters.map(f =>
-    `<button class="filter-btn ${currentFilter === f.key ? 'active' : ''}" onclick="setFilter('${f.key}')">${f.label}(${counts[f.key] || 0})</button>`
+    `<button class="filter-btn ${currentFilter === f.key ? 'active' : ''}" onclick="setFilter('${f.key}')">${f.label} (${counts[f.key] || 0})</button>`
   ).join('');
 }
 
@@ -860,7 +841,7 @@ function renderTimeline() {
   if (currentFilter !== 'all') entries = entries.filter(e => e.type === currentFilter);
 
   if (!entries.length) {
-    container.innerHTML = `<div class="empty-state"><div class="empty-icon">📝</div><p>まだメモがありません<br>「記録」タブから最初のメモを追加しましょう</p></div>`;
+    container.innerHTML = '<div class="empty-state"><p>まだメモがありません<br>「Record」タブから最初のメモを追加しましょう</p></div>';
     return;
   }
 
@@ -876,16 +857,14 @@ function renderTimeline() {
         const tagClass = 'tag-' + (it.tag || 'good');
         const tagLabel = TAG_LABELS[it.tag] || it.tag || '良い';
         const themes = (it.theme || '').split(',').filter(Boolean);
-        const themesHtml = themes.length
-          ? '<div class="item-themes">' + themes.map(t => `<span class="theme-chip">${getThemeIcon(t)}${t}</span>`).join('') + '</div>'
-          : '';
-        return `<div class="item-row ${tagClass}"><span class="item-tag">${tagLabel}</span><div><div class="item-text">${escHtml(it.text)}</div>${themesHtml}</div></div>`;
+        const themesHtml = themes.map(t => `<span class="theme-chip ${getThemeClass(t)}">${escHtml(t)}</span>`).join('');
+        return `<div class="item-row ${tagClass}"><span class="item-tag">${tagLabel}</span><div>${escHtml(it.text)} ${themesHtml}</div></div>`;
       }).join('') + '</div>';
     }
 
     const noteHtml = entry.note ? `<div class="card-note">${escHtml(entry.note)}</div>` : '';
 
-    return `<div class="card" onclick="openEntryDetail('${entry.id}')">
+    return `<div class="card-entry" onclick="openEntryDetail('${entry.id}')">
       <div class="card-header">
         <span class="card-date">${dateStr}</span>
         <span class="card-type ${typeClass}">${typeLabel}</span>
@@ -914,10 +893,8 @@ function openEntryDetail(id) {
       const tagClass = 'tag-' + (it.tag || 'good');
       const tagLabel = TAG_LABELS[it.tag] || it.tag;
       const themes = (it.theme || '').split(',').filter(Boolean);
-      const themesHtml = themes.length
-        ? '<div class="item-themes">' + themes.map(t => `<span class="theme-chip">${getThemeIcon(t)}${t}</span>`).join('') + '</div>'
-        : '';
-      return `<div class="item-row ${tagClass}"><span class="item-tag">${tagLabel}</span><div><div class="item-text">${escHtml(it.text)}</div>${themesHtml}</div></div>`;
+      const themesHtml = themes.map(t => `<span class="theme-chip ${getThemeClass(t)}">${escHtml(t)}</span>`).join('');
+      return `<div class="item-row ${tagClass}"><span class="item-tag">${tagLabel}</span><div>${escHtml(it.text)} ${themesHtml}</div></div>`;
     }).join('') + '</div>';
   }
   document.getElementById('entryModalBody').innerHTML = html;
@@ -979,7 +956,6 @@ function getSelectedType() {
 
 function addItemRow(data) {
   const container = document.getElementById('itemsForm');
-  const idx = container.children.length;
   const div = document.createElement('div');
   div.className = 'item-form-row';
   div.dataset.itemId = (data && data.id) || '';
@@ -988,7 +964,7 @@ function addItemRow(data) {
   const themes = state.themes.length ? state.themes : [];
   const selectedThemes = data ? (data.theme || '').split(',').filter(Boolean) : [];
   const themeBtns = themes.sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0)).map(t =>
-    `<button type="button" class="theme-toggle ${selectedThemes.includes(t.name) ? 'selected' : ''}" data-theme="${escAttr(t.name)}" onclick="this.classList.toggle('selected')">${t.icon || ''} ${escHtml(t.name)}</button>`
+    `<button type="button" class="theme-toggle ${selectedThemes.includes(t.name) ? 'selected' : ''}" data-theme="${escAttr(t.name)}" onclick="this.classList.toggle('selected')">${escHtml(t.name)}</button>`
   ).join('');
 
   div.innerHTML = `<div class="item-form-main">
@@ -1047,7 +1023,6 @@ async function saveEntry() {
     createdAt: existingId ? (state.entries.find(e => e.id === existingId) || {}).createdAt || now : now
   };
 
-  // Collect items
   const itemRows = document.querySelectorAll('#itemsForm .item-form-row');
   const items = [];
   itemRows.forEach((row, i) => {
@@ -1064,7 +1039,6 @@ async function saveEntry() {
     });
   });
 
-  // Optimistic update
   if (existingId) {
     const idx = state.entries.findIndex(e => String(e.id) === String(existingId));
     if (idx >= 0) state.entries[idx] = entry;
@@ -1077,27 +1051,20 @@ async function saveEntry() {
   renderAll();
 
   clearForm();
-  showTab('timeline');
+  showTab('top');
   showToast('保存しました');
 
-  // Async save to GAS
   await gasRequest({ action: 'bulkSaveEntry', entry, items });
 }
 
-// ===== REVIEW =====
-function renderReview() {
-  if (currentSubTab === 'theme') renderThemeReview();
-  else if (currentSubTab === 'repeat') renderRepeatDetection();
-}
-
+// ===== REVIEW: THEME =====
 function renderThemeReview() {
   const container = document.getElementById('subtab-theme');
   if (!state.items.length) {
-    container.innerHTML = '<div class="empty-state"><div class="empty-icon">📊</div><p>まだ観察データがありません</p></div>';
+    container.innerHTML = '<div class="empty-state"><p>まだ観察データがありません</p></div>';
     return;
   }
 
-  // Group items by theme
   const themeMap = {};
   state.items.forEach(it => {
     const themes = (it.theme || '').split(',').filter(Boolean);
@@ -1108,13 +1075,10 @@ function renderThemeReview() {
     });
   });
 
-  // Sort themes by configured order
   const themeOrder = {};
   state.themes.forEach(t => { themeOrder[t.name] = t.sortOrder || 99; });
-
   const sortedThemes = Object.keys(themeMap).sort((a, b) => (themeOrder[a] || 99) - (themeOrder[b] || 99));
 
-  // Build theme bar chart + item lists
   let html = '<div class="theme-bar-container">';
   const maxCount = Math.max(...sortedThemes.map(t => themeMap[t].length));
   sortedThemes.forEach(t => {
@@ -1124,7 +1088,7 @@ function renderThemeReview() {
     const total = items.length;
     const pct = (v) => (v / maxCount * 100).toFixed(1);
     html += `<div class="theme-bar-row">
-      <span class="theme-bar-label">${getThemeIcon(t)} ${escHtml(t)}</span>
+      <span class="theme-bar-label"><span class="theme-chip ${getThemeClass(t)}" style="font-size:10px;">${escHtml(t)}</span></span>
       <div class="theme-bar-track">
         <div class="theme-bar-good" style="width:${pct(good)}%"></div>
         <div class="theme-bar-improve" style="width:${pct(improve)}%"></div>
@@ -1135,17 +1099,15 @@ function renderThemeReview() {
   html += '</div>';
 
   html += '<div style="display:flex;gap:12px;margin:12px 0 16px;font-size:11px;color:var(--text-sub);">';
-  html += '<span><span style="display:inline-block;width:10px;height:10px;background:var(--green);border-radius:2px;vertical-align:middle;"></span> 良い</span>';
-  html += '<span><span style="display:inline-block;width:10px;height:10px;background:var(--orange);border-radius:2px;vertical-align:middle;"></span> 改善</span>';
+  html += '<span><span style="display:inline-block;width:10px;height:10px;background:var(--green);vertical-align:middle;"></span> 良い</span>';
+  html += '<span><span style="display:inline-block;width:10px;height:10px;background:var(--orange);vertical-align:middle;"></span> 改善</span>';
   html += '</div>';
 
-  // Detailed sections
   sortedThemes.forEach(t => {
     const items = themeMap[t];
     html += `<div class="theme-section">
       <div class="theme-header">
-        <span class="theme-icon">${getThemeIcon(t)}</span>
-        <span>${escHtml(t)}</span>
+        <span class="theme-chip ${getThemeClass(t)}" style="font-size:11px;padding:2px 10px;">${escHtml(t)}</span>
         <span class="theme-count">${items.length}件</span>
       </div>
       <div class="item-list">`;
@@ -1157,7 +1119,7 @@ function renderThemeReview() {
       const entry = state.entries.find(e => String(e.id) === String(it.entryId));
       const dateStr = entry ? formatDateShort(entry.date) : '';
       const tagClass = 'tag-' + (it.tag || 'good');
-      html += `<div class="item-row ${tagClass}"><span class="item-tag">${TAG_LABELS[it.tag] || it.tag}</span><div><div class="item-text">${escHtml(it.text)}</div><div style="font-size:10px;color:var(--text-sub);margin-top:2px;">${dateStr} ${entry ? escHtml(entry.title || '') : ''}</div></div></div>`;
+      html += `<div class="item-row ${tagClass}"><span class="item-tag">${TAG_LABELS[it.tag] || it.tag}</span><div>${escHtml(it.text)}<div style="font-size:10px;color:var(--text-light);margin-top:2px;">${dateStr} ${entry ? escHtml(entry.title || '') : ''}</div></div></div>`;
     });
     html += '</div></div>';
   });
@@ -1165,14 +1127,14 @@ function renderThemeReview() {
   container.innerHTML = html;
 }
 
+// ===== REVIEW: REPEAT =====
 function renderRepeatDetection() {
   const container = document.getElementById('subtab-repeat');
   if (!state.items.length) {
-    container.innerHTML = '<div class="empty-state"><div class="empty-icon">🔍</div><p>まだ観察データがありません</p></div>';
+    container.innerHTML = '<div class="empty-state"><p>まだ観察データがありません</p></div>';
     return;
   }
 
-  // Find repeating patterns: items with similar text that appear multiple times
   const improveItems = state.items.filter(it => it.tag === 'improve' || it.tag === 'drill');
   const textCounts = {};
   improveItems.forEach(it => {
@@ -1183,7 +1145,6 @@ function renderRepeatDetection() {
     textCounts[key].items.push(it);
   });
 
-  // Also check theme-based repeats
   const themeRepeats = {};
   improveItems.forEach(it => {
     const themes = (it.theme || '').split(',').filter(Boolean);
@@ -1193,7 +1154,7 @@ function renderRepeatDetection() {
     });
   });
 
-  let html = '<h3 style="font-size:14px;font-weight:700;margin-bottom:12px;">同じ改善点の繰り返し</h3>';
+  let html = '<div style="font-size:12px;font-weight:900;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;">同じ改善点の繰り返し</div>';
 
   const repeats = Object.values(textCounts).filter(v => v.dates.length >= 2)
     .sort((a, b) => b.dates.length - a.dates.length);
@@ -1202,31 +1163,28 @@ function renderRepeatDetection() {
     repeats.forEach(r => {
       const dates = [...new Set(r.dates)].sort().reverse();
       html += `<div class="repeat-card">
-        <div class="repeat-count">${r.dates.length}回 繰り返し</div>
+        <div class="repeat-count">${r.dates.length}回 REPEAT</div>
         <div class="repeat-text">${escHtml(r.text)}</div>
         <div class="repeat-dates">${dates.map(formatDateShort).join(', ')}</div>
       </div>`;
     });
   } else {
-    html += '<div class="card"><p style="font-size:13px;color:var(--text-sub);">繰り返されている改善点はまだ検出されていません</p></div>';
+    html += '<p style="font-size:13px;color:var(--text-sub);padding:12px 0;">繰り返されている改善点はまだ検出されていません</p>';
   }
 
-  // Theme-based repeats
-  html += '<h3 style="font-size:14px;font-weight:700;margin:20px 0 12px;">テーマ別の改善点数</h3>';
+  html += '<div style="font-size:12px;font-weight:900;letter-spacing:2px;text-transform:uppercase;margin:24px 0 12px;">テーマ別の改善点数</div>';
   const sortedThemeRepeats = Object.entries(themeRepeats)
     .sort((a, b) => b[1].length - a[1].length);
 
   if (sortedThemeRepeats.length) {
     sortedThemeRepeats.forEach(([theme, items]) => {
-      html += `<div class="card" style="margin-bottom:8px;">
-        <div style="display:flex;justify-content:space-between;align-items:center;">
-          <span style="font-weight:700;">${getThemeIcon(theme)} ${escHtml(theme)}</span>
-          <span style="font-size:13px;color:var(--orange);font-weight:700;">${items.length}件の改善点</span>
-        </div>
+      html += `<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border);">
+        <span class="theme-chip ${getThemeClass(theme)}" style="font-size:11px;padding:2px 10px;">${escHtml(theme)}</span>
+        <span style="font-size:13px;color:var(--orange);font-weight:700;">${items.length}件</span>
       </div>`;
     });
   } else {
-    html += '<div class="card"><p style="font-size:13px;color:var(--text-sub);">テーマ付きの改善点がありません</p></div>';
+    html += '<p style="font-size:13px;color:var(--text-sub);padding:12px 0;">テーマ付きの改善点がありません</p>';
   }
 
   container.innerHTML = html;
@@ -1247,7 +1205,6 @@ function closeKidsReview() {
 function buildKidsPages() {
   kidsPages = [];
 
-  // Page 1: Recent highlights (good items)
   const recentGood = state.items.filter(i => i.tag === 'good')
     .map(i => ({ ...i, entry: state.entries.find(e => String(e.id) === String(i.entryId)) }))
     .filter(i => i.entry)
@@ -1255,26 +1212,22 @@ function buildKidsPages() {
     .slice(0, 5);
 
   kidsPages.push({
-    icon: '🌟', title: '最近のハイライト',
-    body: recentGood.length
+    title: 'HIGHLIGHTS', body: recentGood.length
       ? recentGood.map(i => `<div class="kids-item kids-item-good">${escHtml(i.text)}<div style="font-size:11px;color:var(--text-sub);margin-top:4px;">${formatDateShort(i.entry.date)}</div></div>`).join('')
       : '<p style="color:var(--text-sub);">まだデータがありません</p>'
   });
 
-  // Page 2: Growth points (improve→good transitions by theme)
   const growthItems = findGrowthPoints();
   kidsPages.push({
-    icon: '📈', title: '成長ポイント',
-    body: growthItems.length
+    title: 'GROWTH', body: growthItems.length
       ? growthItems.map(g => `<div class="kids-item kids-item-good" style="margin-bottom:10px;">
-          <div style="font-weight:700;margin-bottom:6px;">${getThemeIcon(g.theme)} ${escHtml(g.theme)}</div>
+          <div style="font-weight:700;margin-bottom:6px;"><span class="theme-chip ${getThemeClass(g.theme)}">${escHtml(g.theme)}</span></div>
           <div style="font-size:12px;color:var(--text-sub);text-decoration:line-through;margin-bottom:4px;">${escHtml(g.before)}</div>
           <div style="font-size:14px;">→ ${escHtml(g.after)}</div>
         </div>`).join('')
       : '<p style="color:var(--text-sub);">まだ成長データが蓄積されていません<br>記録を続けると成長が見えてきます</p>'
   });
 
-  // Page 3: Next challenges (improve items, positively reframed)
   const recentImprove = state.items.filter(i => i.tag === 'improve')
     .map(i => ({ ...i, entry: state.entries.find(e => String(e.id) === String(i.entryId)) }))
     .filter(i => i.entry)
@@ -1282,13 +1235,11 @@ function buildKidsPages() {
     .slice(0, 5);
 
   kidsPages.push({
-    icon: '🎯', title: '次のチャレンジ',
-    body: recentImprove.length
-      ? recentImprove.map(i => `<div class="kids-item" style="background:var(--primary-pale);">${positiveReframe(i.text)}</div>`).join('')
+    title: 'NEXT CHALLENGE', body: recentImprove.length
+      ? recentImprove.map(i => `<div class="kids-item kids-item-challenge">${positiveReframe(i.text)}</div>`).join('')
       : '<p style="color:var(--text-sub);">改善ポイントがまだありません</p>'
   });
 
-  // Page 4: Theme summary
   const themeSummary = {};
   state.items.forEach(it => {
     const themes = (it.theme || '').split(',').filter(Boolean);
@@ -1300,32 +1251,28 @@ function buildKidsPages() {
   const sortedSummary = Object.entries(themeSummary).sort((a, b) => b[1] - a[1]).slice(0, 6);
 
   kidsPages.push({
-    icon: '📊', title: 'テーマ別サマリー',
-    body: sortedSummary.length
+    title: 'THEME SUMMARY', body: sortedSummary.length
       ? '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">' +
         sortedSummary.map(([t, c]) =>
-          `<div style="background:var(--bg);border-radius:12px;padding:14px;text-align:center;">
-            <div style="font-size:28px;">${getThemeIcon(t)}</div>
-            <div style="font-size:12px;font-weight:700;margin-top:4px;">${escHtml(t)}</div>
-            <div style="font-size:20px;font-weight:900;color:var(--primary-light);">${c}</div>
+          `<div style="background:#f5f5f5;padding:14px;text-align:center;">
+            <div><span class="theme-chip ${getThemeClass(t)}" style="font-size:11px;padding:2px 10px;">${escHtml(t)}</span></div>
+            <div style="font-size:24px;font-weight:900;margin-top:8px;">${c}</div>
           </div>`
         ).join('') + '</div>'
       : '<p style="color:var(--text-sub);">テーマデータがありません</p>'
   });
 
-  // Page 5: Stats
   const totalEntries = state.entries.length;
   const totalItems = state.items.length;
   const goodCount = state.items.filter(i => i.tag === 'good').length;
   const improveCount = state.items.filter(i => i.tag === 'improve' || i.tag === 'drill').length;
 
   kidsPages.push({
-    icon: '🏆', title: '記録スタッツ',
-    body: `<div class="kids-stat-grid">
-      <div class="kids-stat"><div class="kids-stat-num">${totalEntries}</div><div class="kids-stat-label">記録数</div></div>
-      <div class="kids-stat"><div class="kids-stat-num">${totalItems}</div><div class="kids-stat-label">観察ポイント</div></div>
-      <div class="kids-stat"><div class="kids-stat-num">${goodCount}</div><div class="kids-stat-label">良いポイント</div></div>
-      <div class="kids-stat"><div class="kids-stat-num">${improveCount}</div><div class="kids-stat-label">チャレンジ</div></div>
+    title: 'STATS', body: `<div class="kids-stat-grid">
+      <div class="kids-stat"><div class="kids-stat-num">${totalEntries}</div><div class="kids-stat-label">Records</div></div>
+      <div class="kids-stat"><div class="kids-stat-num">${totalItems}</div><div class="kids-stat-label">Points</div></div>
+      <div class="kids-stat"><div class="kids-stat-num">${goodCount}</div><div class="kids-stat-label">Good</div></div>
+      <div class="kids-stat"><div class="kids-stat-num">${improveCount}</div><div class="kids-stat-label">Challenge</div></div>
     </div>`
   });
 }
@@ -1345,7 +1292,6 @@ function findGrowthPoints() {
 
   Object.entries(themeItems).forEach(([theme, items]) => {
     items.sort((a, b) => (a.date || '').localeCompare(b.date || ''));
-    // Look for improve followed by good in same theme
     const improves = items.filter(i => i.tag === 'improve');
     const goods = items.filter(i => i.tag === 'good');
     improves.forEach(imp => {
@@ -1361,7 +1307,6 @@ function findGrowthPoints() {
 }
 
 function positiveReframe(text) {
-  // Simple positive reframing
   const reframes = [
     [/できなかった/g, 'チャレンジ中の'],
     [/弱い/g, 'もっと強くなれる'],
@@ -1383,7 +1328,6 @@ function renderKidsPage() {
 
   document.getElementById('kidsCards').innerHTML = kidsPages.map(p =>
     `<div class="kids-card"><div class="kids-card-inner">
-      <div class="kids-card-icon">${p.icon}</div>
       <div class="kids-card-title">${p.title}</div>
       <div class="kids-card-body">${p.body}</div>
     </div></div>`
@@ -1412,9 +1356,9 @@ function renderThemeList() {
   const sorted = [...state.themes].sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0));
   container.innerHTML = sorted.map(t =>
     `<div class="setting-item" style="gap:8px;">
-      <input type="text" class="form-input" style="width:50px;padding:6px;text-align:center;" value="${escAttr(t.icon || '')}" data-id="${t.id}" data-field="icon" onchange="updateThemeField(this)">
+      <span class="theme-chip ${getThemeClass(t.name)}" style="font-size:11px;padding:3px 10px;">${escHtml(t.name)}</span>
       <input type="text" class="form-input" style="flex:1;padding:6px;" value="${escAttr(t.name)}" data-id="${t.id}" data-field="name" onchange="updateThemeField(this)">
-      <button class="btn btn-ghost btn-sm" style="color:var(--red);flex-shrink:0;" onclick="deleteTheme('${t.id}')">削除</button>
+      <button class="btn btn-ghost btn-sm" style="color:var(--orange);flex-shrink:0;" onclick="deleteTheme('${t.id}')">削除</button>
     </div>`
   ).join('');
 }
@@ -1441,26 +1385,19 @@ async function deleteTheme(id) {
 }
 
 async function addTheme() {
-  const icon = document.getElementById('newThemeIcon').value.trim();
   const name = document.getElementById('newThemeName').value.trim();
   if (!name) { showToast('テーマ名を入力してください'); return; }
   const maxOrder = state.themes.reduce((m, t) => Math.max(m, t.sortOrder || 0), 0);
-  const theme = { id: String(Date.now()), name, icon, sortOrder: maxOrder + 1 };
+  const theme = { id: String(Date.now()), name, icon: '', sortOrder: maxOrder + 1 };
   state.themes.push(theme);
   saveToCache();
   renderThemeList();
-  document.getElementById('newThemeIcon').value = '';
   document.getElementById('newThemeName').value = '';
   showToast('テーマを追加しました');
   gasRequest({ action: 'saveTheme', ...theme });
 }
 
 // ===== HELPERS =====
-function getThemeIcon(name) {
-  const t = state.themes.find(t => t.name === name);
-  return t ? (t.icon || '') + ' ' : '';
-}
-
 function toDateStr(d) {
   if (!d) return '';
   const m = String(d).match(/^(\d{4})-(\d{2})-(\d{2})/);
@@ -1470,7 +1407,6 @@ function toDateStr(d) {
 function parseDate(d) {
   if (!d) return null;
   const s = String(d);
-  // YYYY-MM-DD or ISO datetime
   const m = s.match(/^(\d{4})-(\d{2})-(\d{2})/);
   if (m) return new Date(parseInt(m[1]), parseInt(m[2]) - 1, parseInt(m[3]));
   const dt = new Date(s);
@@ -1480,8 +1416,8 @@ function parseDate(d) {
 function formatDate(d) {
   const dt = parseDate(d);
   if (!dt) return '';
-  const wd = ['日', '月', '火', '水', '木', '金', '土'][dt.getDay()];
-  return `${dt.getFullYear()}/${dt.getMonth() + 1}/${dt.getDate()}(${wd})`;
+  const wd = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][dt.getDay()];
+  return `${dt.getFullYear()}.${dt.getMonth() + 1}.${dt.getDate()} ${wd}`;
 }
 
 function formatDateShort(d) {
